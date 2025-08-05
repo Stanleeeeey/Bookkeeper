@@ -1,0 +1,10 @@
+.dark{
+    --background-color: #0b0b09;
+    --text-color: #e7e5de;
+
+}
+
+.light{
+    --background-color: #e7e5de;
+    --text-color: #131412
+}
