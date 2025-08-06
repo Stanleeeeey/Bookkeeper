@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+{% block head %}{% endblock %}
+</head>
+<body class = "{{mode}}">
+    {% block nav %}
+    <nav>
+        <h1>Bookkeeper</h1>
+        <a href="/manage-users">manage users</a>
+        {% block add_to_nav %}
+        {% endblock %}
+    </nav>
+    {% endblock %}
+    {% block body %}{% endblock %}
+</body>
+</html>

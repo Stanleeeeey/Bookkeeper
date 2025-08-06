@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block head %}
+{% endblock %}
+
+{% block add_to_nav %}
+
+<a href="/add-book/{{library_id}}">add book</a>
+{% endblock %}
+
+{% block body %}
+<div>
+    {% for book in books %}
+    <p>{{book.title}} {{book.library.name}} </p>
+    {% endfor %}
+</div>
+{% endblock %}

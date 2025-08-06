@@ -1,5 +1,5 @@
 
-from bookkeeper.database.models import Book
+from bookkeeper.database import Book
 from bookkeeper.database.database import DBMessage
 from bookkeeper.api.utils import *
 from flask import  Response

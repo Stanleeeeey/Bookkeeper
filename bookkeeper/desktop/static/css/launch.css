@@ -1,18 +1,4 @@
-*{
-    padding: 0;
-    margin: 0;
 
-    font-family: "MedievalSharp", cursive;
-    font-weight: 400;
-    font-style: normal;
-
-
-}
-
-body{
-    background-color: var(--background-color);
-    color: var(--text-color)
-}
 div{
     width:100vw;
     height:100vh;

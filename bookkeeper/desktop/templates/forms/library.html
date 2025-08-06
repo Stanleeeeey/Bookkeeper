@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
+{% endblock %}
+
+
+{% block body %}
+
+<form action="/create-library" method = "post">
+
+    <label for="name">library name</label>
+    <input type="text" name= "name" required>
+    <button type="submit">create library</button>
+
+</form>
+{% endblock %}

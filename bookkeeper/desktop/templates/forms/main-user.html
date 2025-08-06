@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
+{% endblock %}
+
+{% block nav %}
+{% endblock %}
+{% block body %}
+
+<form action="/create-main-user" method = 'POST'>
+
+    <label for="name">What's your name?</label>
+    <input type="text" name = "name" required>
+    <label for="surname">What's your surname? (optional)</label>
+    <input type="text" name = "surname">
+
+    <button action = "submit">Proceed</button>
+</form>
+
+{% endblock %}

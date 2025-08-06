@@ -1,9 +1,9 @@
+from bookkeeper.database.models import *
 from sqlalchemy import create_engine
 from sqlalchemy.orm import  Session
 from sqlalchemy import Column, Integer, String
 
-from bookkeeper.database.models import Base, Book, Author, User
-
+from bookkeeper.database.DTO import Book, Author, Library, User
 
 DB_URL = "sqlite:///example.db"
 
@@ -25,17 +25,22 @@ class DBResponse:
 
         self.message = message
         if self.message in [DBMessage.OBJECT, DBMessage.OBJECT_LIST, DBMessage.CREATED, DBMessage.DELETED]:
-            if value == None: ValueError("This DB message requires additional field - vlaue")
+            if value == None: ValueError("This DB message requires additional field - value")
             self.value = value
         else: self.value = None
 
     def __repr__(self):
         if self.value != None:
-            return self.value
-        return self.message
+            return self.value.__repr__()
+        return self.message.__repr__()
+    
+    def __str__(self):
+        if self.value != None:
+            return self.value.__str__()
+        return self.message.__str__()
     
     def __json__(self):
-        if self.message == DBMessage.OBJECT: return self.value.__json__()
+        if self.message == DBMessage.OBJECT or self.message == DBMessage.CREATED: return self.value.__json__()
         elif self.message == DBMessage.OBJECT_LIST: return [obj.__json__() for obj in self.value]
 
     def __iter__(self):
@@ -51,7 +56,7 @@ class Database():
     def add_book(self, book: Book) -> DBResponse:
         if self.does_author_exist(book.author_id):
             session =  Session(bind = self.engine)
-            session.add(book)
+            session.add(book.db())
             session.commit()
             return DBResponse(DBMessage.CREATED, book.id)
         else:
@@ -59,36 +64,61 @@ class Database():
 
     def add_author(self, author: Author) -> DBResponse:
         session =  Session(bind = self.engine)
-        session.add(author)
+        session.add(author.db())
         session.commit()
         return DBResponse(DBMessage.CREATED, author.id)
+    
+    def add_user(self, user: User) -> DBResponse:
+        session =  Session(bind = self.engine)
+        session.add(user.db())
+        session.commit()
+        return DBResponse(DBMessage.CREATED, user.id)
+
+    def add_library(self, library: Library) -> DBResponse:
+        session =  Session(bind = self.engine)
+        session.add(library.db())
+        session.commit()
+        return DBResponse(DBMessage.CREATED, library.id)
 
     def get_books(self) -> DBResponse:
         session =  Session(bind = self.engine)
-        return DBResponse(DBMessage.OBJECT_LIST, session.query(Book).all())
+        return DBResponse(DBMessage.OBJECT_LIST, [Book.from_db(obj) for obj in session.query(BookSchema).all()])
     
     def get_authors(self) -> DBResponse:
         session =  Session(bind = self.engine)
-        return DBResponse(DBMessage.OBJECT_LIST, session.query(Author).all())
+        return DBResponse(DBMessage.OBJECT_LIST, [Author.from_db(obj) for obj in session.query(AuthorSchema).all()])
     
+    #for now all the libraries belong only to one user, but just in case
+    def get_libraries_by_user(self, user_id) -> DBResponse:
+        session =  Session(bind = self.engine)
+        return DBResponse(DBMessage.OBJECT_LIST, [Library.from_db(obj) for obj in session.query(LibrarySchema).all()])
+
     def get_books_by_author_id(self, author_id) -> DBResponse:
         session =  Session(bind = self.engine)
-        return DBResponse(DBMessage.OBJECT_LIST, session.query(Author).where(Author.id == author_id).first().books)
+        return DBResponse(DBMessage.OBJECT_LIST, [Book.from_db(obj) for obj in session.query(AuthorSchema).where(AuthorSchema.id == author_id).first().books])
     
     def get_book_by_id(self, id: int) -> DBResponse:
         session = Session(bind = self.engine)
-        return DBResponse(DBMessage.OBJECT ,session.query(Book).where(Book.id == id).first())
+        return DBResponse(DBMessage.OBJECT , Book.from_db(session.query(BookSchema).where(BookSchema.id == id).first()))
+    
+    def get_books_by_library(self, library_id : int) -> DBResponse:
+        session =  Session(bind = self.engine)
+        return DBResponse(DBMessage.OBJECT_LIST, [Book.from_db(obj) for obj in session.query(LibrarySchema).where(LibrarySchema.id == library_id).first().books])
     
     def get_author_by_id(self, id: int) -> DBResponse:
         session = Session(bind = self.engine)
-        return DBResponse(DBMessage.OBJECT, session.query(Author).where(Author.id == id).first())
+        return DBResponse(DBMessage.OBJECT, Author.from_db(session.query(AuthorSchema).where(AuthorSchema.id == id).first()))
     
+    def get_user_by_id(self, id: int) -> DBResponse:
+        session = Session(bind = self.engine)
+        return DBResponse(DBMessage.OBJECT, User.from_db(session.query(UserSchema).where(UserSchema.id == id).first()))
+
     def does_author_exist(self, author_id) -> bool:
         return self.get_author_by_id(author_id) != None
     
     def delete_book(self, id):
         session = Session(bind = self.engine)
-        book = session.query(Book).where(Book.id == id).first()
+        book = session.query(BookSchema).where(BookSchema.id == id).first()
         if book: 
             session.delete(book)
             session.commit()
@@ -97,7 +127,7 @@ class Database():
 
     def modify_book(self, id, **options) -> DBResponse:
         session = Session(bind = self.engine)
-        book = session.query(Book).where(Book.id == id).first()
+        book = session.query(BookSchema).where(BookSchema.id == id).first()
         if book:
             if "title" in options:
                 book.title = options["title"]
