@@ -13,8 +13,9 @@
 {% block body %}
 
 <div class="content-wrap">
+    
     <div class="libraries-wrap">
-        <h3>List of your libraries</h3>
+        <h1>Your libraries</h1>
         <div class="libraries-list">
             {% for library in libraries %}
             <a class = "library" href='{{"/library/" +library.id|string}}'>{{library.name}}</a>

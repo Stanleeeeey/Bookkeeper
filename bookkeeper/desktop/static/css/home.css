@@ -14,32 +14,39 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+}
+
+.content-wrap h1{
+    text-align: left;
+    width:100%
 }
 
 .libraries-wrap{
-    padding: 1rem;
-    margin: 1rem;
+
+
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+
     align-items: center;
-    
-    border: 2px solid var(--text-color);
-    border-radius: 5px;
+
     overflow: hidden;
 }
 
 .libraries-list{
+    min-width: 50vw;
     overflow-y: scroll;
     width:100%;
     max-height: 30vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    border: 2px solid var(--text-color);
+    padding: 1rem;
+    border-radius: 5px;
 
-    border: 1px solid var(--text-color);
     max-width: 50vw;
-    border-radius: 2px;
+
 }
 
 .libraries-list::-webkit-scrollbar{
@@ -55,12 +62,16 @@ body{
     padding:.5rem;
     width:100%;
     text-align: center;
+    box-sizing: border-box;
+    transition: .1s;
 }
 
 .library:hover{
     background-color: var(--text-color);
     color: var(--background-color);
     border-radius: 2px;
+    box-sizing: border-box;
+    transition: .2s;
 
 }
 
@@ -70,16 +81,19 @@ body{
     text-overflow: ellipsis;
     white-space:nowrap;
     color: var(--text-color);
-
-    padding: 1rem;
-    border-top: 1px solid var(--text-color);
-    width:100%;
+    padding:.5rem;
+    border: 1px solid var(--text-color);
+    border-radius: 2px;
+    width: 100%;
+    box-sizing: border-box;
     text-align: center;
+    transition: .1s;
 }
 
 .add-library:hover{
     background-color: var(--text-color);
     color: var(--background-color);
-    border-radius: 2px;
+    transition: .2s;
+    
 
 }

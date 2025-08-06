@@ -31,7 +31,7 @@ class DesktopApp:
         self.db = Database()
         self._initialize_server()
 
-        self.server.run()
+        #self.server.run()
 
         webview.create_window('Bookkeeper', self.server)        
-        #webview.start(debug = True)
+        webview.start(debug = True)
