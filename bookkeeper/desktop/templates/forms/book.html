@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
+{% endblock %}
+
+
+{% block body %}
+
+<form action="/add-book/{{library_id}}" method = "POST">
+
+    <label for="title">Book name</label>
+    <input type="text" name= "title" required>
+    <label for="author">Author</label>
+    <select name= "author" required>
+        {% for author in authors %}
+            <option value="{{author.id}}">{{author.name}} {{author.surname}}</option>
+
+        {% endfor %}
+        
+    </select>
+    <a href="/add-author">don't see your author? add one</a>
+    <label for="edition">Edition (optional)</label>
+    <input type="number" name= "edition">
+    
+    <button type="submit">add book</button>
+
+</form>
+{% endblock %}

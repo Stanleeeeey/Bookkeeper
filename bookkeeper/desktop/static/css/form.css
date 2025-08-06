@@ -41,3 +41,13 @@ button:hover{
     background-color: var(--text-color);
     color: var(--background-color)
 }
+
+form label{
+    font-size: 150%;
+}
+
+form a{
+    font-size: xx-small;
+    color: var(--text-color);
+    
+}

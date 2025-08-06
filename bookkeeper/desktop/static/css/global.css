@@ -54,6 +54,7 @@ nav a{
     border: 2px solid var(--text-color);
     border-radius: 5px;
     transition: .1s;
+    text-align: center;
 }
 
 nav a:hover{
@@ -61,4 +62,18 @@ nav a:hover{
     border: 2px solid var(--text-color);
     color: var(--text-color);
     transition: .2s;
+}
+
+nav .home{
+    background-color: transparent;
+    padding: 0;
+    border: 0px;
+    color: var(--text-color);
+}
+
+nav .home:hover{
+    background-color: transparent;
+    padding: 0;
+    border: 0px;
+    color: var(--text-color);
 }

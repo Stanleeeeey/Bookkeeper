@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
+{% endblock %}
+
+
+{% block body %}
+
+<form action="/add-author" method = "post">
+
+    <label for="name">Author's name</label>
+    <input type="text" name= "name" required>
+
+    <label for="surname">Author's surname</label>
+    <input type="text" name= "surname">
+    <button type="submit">add Author</button>
+
+</form>
+{% endblock %}

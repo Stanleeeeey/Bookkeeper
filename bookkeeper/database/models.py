@@ -78,6 +78,10 @@ class AuthorSchema(Base):
             "surname":self.surname
         }
     
+    def __init__(self, name, surname):
+        self.name = name
+        self.surname=  surname
+    
 
 class UserSchema(Base):
     __tablename__ = "users"

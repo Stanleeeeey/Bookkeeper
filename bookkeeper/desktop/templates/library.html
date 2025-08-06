@@ -1,17 +1,31 @@
 {% extends "base.html" %}
 
 {% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/library.css') }}">
 {% endblock %}
 
 {% block add_to_nav %}
 
-<a href="/add-book/{{library_id}}">add book</a>
+<a href="/add-book/{{library.id}}">add book</a>
 {% endblock %}
 
 {% block body %}
-<div>
-    {% for book in books %}
-    <p>{{book.title}} {{book.library.name}} </p>
-    {% endfor %}
+<div class="content">
+
+    <h1>{{library.name}}</h1>
+    <div class = "book-wrap">
+        <div class = "header">
+            <h3>title</h3>
+            <h3>author</h3>
+            
+        </div>
+        
+            {% for book in books %}
+            <div class = "row">
+                <p>{{book.title}}</p>
+                <p>{{book.author.name}} {{book.author.surname}}</p>
+            </div>
+            {% endfor %}
+    </div>
 </div>
 {% endblock %}

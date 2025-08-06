@@ -54,9 +54,11 @@ class Database():
         Base.metadata.create_all(self.engine)
 
     def add_book(self, book: Book) -> DBResponse:
+        
         if self.does_author_exist(book.author_id):
             session =  Session(bind = self.engine)
-            session.add(book.db())
+            book = book.db()
+            session.add(book)
             session.commit()
             return DBResponse(DBMessage.CREATED, book.id)
         else:
@@ -64,58 +66,85 @@ class Database():
 
     def add_author(self, author: Author) -> DBResponse:
         session =  Session(bind = self.engine)
-        session.add(author.db())
+        author = author.db()
+        session.add(author)
         session.commit()
         return DBResponse(DBMessage.CREATED, author.id)
     
     def add_user(self, user: User) -> DBResponse:
         session =  Session(bind = self.engine)
-        session.add(user.db())
+        user = user.db()
+        session.add(user)
         session.commit()
         return DBResponse(DBMessage.CREATED, user.id)
 
     def add_library(self, library: Library) -> DBResponse:
         session =  Session(bind = self.engine)
-        session.add(library.db())
+        library = library.db()
+        session.add(library)
         session.commit()
         return DBResponse(DBMessage.CREATED, library.id)
 
     def get_books(self) -> DBResponse:
         session =  Session(bind = self.engine)
-        return DBResponse(DBMessage.OBJECT_LIST, [Book.from_db(obj) for obj in session.query(BookSchema).all()])
+        resp =  DBResponse(DBMessage.OBJECT_LIST, [Book.from_db(obj) for obj in session.query(BookSchema).all()])
+        session.close()
+        return resp 
     
     def get_authors(self) -> DBResponse:
         session =  Session(bind = self.engine)
-        return DBResponse(DBMessage.OBJECT_LIST, [Author.from_db(obj) for obj in session.query(AuthorSchema).all()])
+        resp =  DBResponse(DBMessage.OBJECT_LIST, [Author.from_db(obj) for obj in session.query(AuthorSchema).all()])
+        session.close()
+        return resp 
     
     #for now all the libraries belong only to one user, but just in case
     def get_libraries_by_user(self, user_id) -> DBResponse:
         session =  Session(bind = self.engine)
-        return DBResponse(DBMessage.OBJECT_LIST, [Library.from_db(obj) for obj in session.query(LibrarySchema).all()])
+        resp = DBResponse(DBMessage.OBJECT_LIST, [Library.from_db(obj) for obj in session.query(LibrarySchema).all()])
+        session.close()
+        return resp 
+    
+    def get_library_by_id(self, id):
+        session = Session(bind = self.engine)
+        resp = DBResponse(DBMessage.OBJECT , Library.from_db(session.query(LibrarySchema).where(LibrarySchema.id == id).first()))
+        session.close()
+        return resp 
 
     def get_books_by_author_id(self, author_id) -> DBResponse:
         session =  Session(bind = self.engine)
-        return DBResponse(DBMessage.OBJECT_LIST, [Book.from_db(obj) for obj in session.query(AuthorSchema).where(AuthorSchema.id == author_id).first().books])
+        resp =  DBResponse(DBMessage.OBJECT_LIST, [Book.from_db(obj) for obj in session.query(AuthorSchema).where(AuthorSchema.id == author_id).first().books])
+        session.close()
+        return resp 
     
     def get_book_by_id(self, id: int) -> DBResponse:
         session = Session(bind = self.engine)
-        return DBResponse(DBMessage.OBJECT , Book.from_db(session.query(BookSchema).where(BookSchema.id == id).first()))
+        resp =  DBResponse(DBMessage.OBJECT , Book.from_db(session.query(BookSchema).where(BookSchema.id == id).first()))
+        session.close()
+        return resp 
     
     def get_books_by_library(self, library_id : int) -> DBResponse:
         session =  Session(bind = self.engine)
-        return DBResponse(DBMessage.OBJECT_LIST, [Book.from_db(obj) for obj in session.query(LibrarySchema).where(LibrarySchema.id == library_id).first().books])
+        resp =  DBResponse(DBMessage.OBJECT_LIST, [Book.from_db(obj) for obj in session.query(LibrarySchema).where(LibrarySchema.id == library_id).first().books])
+        session.close()
+        return resp 
     
     def get_author_by_id(self, id: int) -> DBResponse:
         session = Session(bind = self.engine)
-        return DBResponse(DBMessage.OBJECT, Author.from_db(session.query(AuthorSchema).where(AuthorSchema.id == id).first()))
+        resp =  DBResponse(DBMessage.OBJECT, Author.from_db(session.query(AuthorSchema).where(AuthorSchema.id == id).first()))
+        session.close()
+        return resp 
     
     def get_user_by_id(self, id: int) -> DBResponse:
         session = Session(bind = self.engine)
-        return DBResponse(DBMessage.OBJECT, User.from_db(session.query(UserSchema).where(UserSchema.id == id).first()))
-
-    def does_author_exist(self, author_id) -> bool:
-        return self.get_author_by_id(author_id) != None
+        resp =  DBResponse(DBMessage.OBJECT, User.from_db(session.query(UserSchema).where(UserSchema.id == id).first()))
+        return resp
     
+    def does_author_exist(self, author_id) -> bool:
+        try:
+            return self.get_author_by_id(author_id) != None
+        except:
+            return False
+        
     def delete_book(self, id):
         session = Session(bind = self.engine)
         book = session.query(BookSchema).where(BookSchema.id == id).first()

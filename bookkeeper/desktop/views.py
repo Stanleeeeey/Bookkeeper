@@ -1,3 +1,4 @@
+from bookkeeper.database.DTO import Author, Book
 from bookkeeper.database.database import Database
 from bookkeeper.database import Library, User
 from bookkeeper.desktop.utils import render_page, get_arg
@@ -24,6 +25,7 @@ def create_main_user_page(db : Database):
         return render_page("forms/main-user.html")
     elif request.method == "POST":
         user_id = db.add_user(User(name = request.form.get("name"), surname = request.form.get("surname")))
+
         set_setting("user-id", user_id.value)
         return redirect("/home")
 
@@ -33,9 +35,33 @@ def create_library( db: Database):
         return render_page("forms/library.html")
     else:
 
-        db.add_library(Library(name = request.form.get("name"), user_id = get_setting("user-id")))
+        db.add_library(Library(name = request.form.get("name"), owned_by = get_setting("user-id")))
         return redirect("/home")
     
 def library(id: int, db : Database):
-    print(db.get_books_by_library(id))
-    return render_page("library.html", library_id = id, books = db.get_books_by_library(id))
+    library = library = db.get_library_by_id(id)
+
+    return render_page("library.html", library = db.get_library_by_id(id).value, books = db.get_books_by_library(id))
+
+def add_book(id:int, db:Database):
+    if request.method == "GET":
+        return render_page("forms/book.html", library_id = id, authors = db.get_authors())
+    else:
+        print(request.form.get("author"))
+        
+        db.add_book(Book(
+            title = request.form.get("title"),
+            author_id = request.form.get("author"),
+            edition = request.form.get("edition"),
+            status = 1,
+            library_id = id,
+            used_by = 1
+        ))
+        return redirect(f"/library/{id}")
+    
+def add_author(db:Database):
+    if request.method == "GET":
+        return render_page("forms/author.html")
+    else:
+        db.add_author(Author(name = request.form.get("name"), surname = request.form.get("surname")))
+        return redirect("/home")
