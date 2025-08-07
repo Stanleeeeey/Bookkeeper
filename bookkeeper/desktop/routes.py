@@ -2,8 +2,8 @@ from bookkeeper.database.DTO import Author, Book
 from bookkeeper.database.database import Database
 from bookkeeper.database import Library, User
 from bookkeeper.desktop.utils import render_page, get_arg
-from flask import render_template, request, redirect
-from bookkeeper.desktop.settings import get_setting, set_setting
+from flask import Response, render_template, request, redirect
+from bookkeeper.desktop.settings import Settings, get_setting, set_setting
 
 
 
@@ -65,3 +65,17 @@ def add_author(db:Database):
     else:
         db.add_author(Author(name = request.form.get("name"), surname = request.form.get("surname")))
         return redirect("/home")
+    
+def settings():
+    if request.method == "GET":
+        return render_page("settings.html", settings = Settings())
+    
+def change_setting():
+    setting = request.json.get("setting")
+    value = request.json.get("value")
+    if setting != None and value != None:
+        set_setting(setting, value)
+
+        return Response(status=200)
+    else:
+        return Response(status=403)

@@ -10,15 +10,18 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
 {% block head %}{% endblock %}
 </head>
-<body class = "{{mode}}">
     {% block nav %}
     <nav>
         <h1><a class="home" href = "/home">Bookkeeper</a></h1>
         <a  href="/manage-users">manage users</a>
+        <a href="/settings">settings</a>
         {% block add_to_nav %}
         {% endblock %}
     </nav>
     {% endblock %}
+<body class = "{{mode}}">
+    <div class="body-wrapper">
     {% block body %}{% endblock %}
+    </div>
 </body>
 </html>

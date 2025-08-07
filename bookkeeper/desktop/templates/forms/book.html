@@ -12,7 +12,7 @@
     <label for="title">Book name</label>
     <input type="text" name= "title" required>
     <label for="author">Author</label>
-    <select name= "author" required>
+    <select name= "author" required >
         {% for author in authors %}
             <option value="{{author.id}}">{{author.name}} {{author.surname}}</option>
 

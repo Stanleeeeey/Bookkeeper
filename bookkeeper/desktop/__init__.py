@@ -1,7 +1,7 @@
 import webview
 from flask import Flask
 from threading import Thread
-from bookkeeper.desktop.views import *
+from bookkeeper.desktop.routes import *
 
 
 class Route:
@@ -25,7 +25,10 @@ class DesktopApp:
         self.server.add_url_rule("/create-library", "create library", Route(create_library, db = self.db), methods = ["GET", "POST"])
         self.server.add_url_rule("/add-book/<id>", "add book", Route(add_book, db = self.db), methods = ["GET", "POST"])
         self.server.add_url_rule("/add-author", "add author", Route(add_author, db = self.db), methods = ["GET", "POST"])
+        self.server.add_url_rule("/settings", "settings", Route(settings), methods = ["GET", "POST"])
+        self.server.add_url_rule("/change-setting", "change setting", Route(change_setting), methods = ["POST"])
         self.server.add_url_rule("/library/<id>", "get library", Route(library, db = self.db))
+
 
     def run(self, ):
         self.db = Database()
@@ -33,5 +36,5 @@ class DesktopApp:
 
         #self.server.run()
 
-        webview.create_window('Bookkeeper', self.server)        
+        webview.create_window('Bookkeeper', self.server, min_size=(600, 600))        
         webview.start(debug = True)

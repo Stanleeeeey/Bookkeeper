@@ -1,0 +1,47 @@
+.container{
+    width:100vw;
+    height:100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+
+
+.settings{
+    border: 2px solid var(--text-color);
+    border-radius: 5px;
+    padding: 1rem;
+    min-width: 50vh;
+}
+
+.setting{
+    
+    display: flex;
+    padding:.5rem;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    justify-content: space-between;
+}
+
+.setting:hover{
+    background-color: var(--text-color);
+    color:var(--background-color)
+}
+
+
+
+button{
+    width: 100%;
+    color: var(--text-color);
+    text-decoration: underline;
+    border: 0px;
+    background-color: transparent;
+}
+
+.disclosure{
+    font-size: 70%;;
+    padding: .1rem;
+}

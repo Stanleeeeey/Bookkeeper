@@ -1,0 +1,35 @@
+{% extends "base.html "%}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/settings.css') }}">
+<script src="{{ url_for('static', filename='js/settings.js') }}"></script>
+
+{% endblock %}
+{% block body %}
+
+<div class="container">
+    <div class="content-wrap">
+        <h1>Bookkeeper's settings</h1>
+        <div class="settings">
+            <div class="setting">
+                <p>dark mode</p>
+
+                <input type="checkbox"  onchange = "change_setting(this, 'dark-mode')" {% if settings["dark-mode"] %} checked {%endif%}>
+                <span class="checkbox"></span>
+            </div>
+            <div class="setting">
+                <div class="info">
+                    <p>API</p>
+                    <p class="disclosure">requires restart</p>
+                </div>
+                
+                <input type="checkbox" onchange = "change_setting(this, 'api')" {% if settings["api"] %} checked {%endif%}>
+                <span class="checkbox"></span>
+            </div>
+            
+            <button class = "setting">reset app</button>
+            
+        </div>
+    </div>
+</div>
+{%endblock%}
