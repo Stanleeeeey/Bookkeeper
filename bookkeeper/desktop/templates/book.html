@@ -1,0 +1,30 @@
+{% extends "base.html"%}
+
+{% block head%}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/book.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="book-contianer">
+    <h1>{{book.title}}</h1>
+    <div class="book">
+        <div class="row">
+            <p>author</p>
+            <p>{{book.author.name}} {{book.author.surname}}</p>
+        </div>
+        <div class="row">
+            <p>status</p>
+            <p>{{book.status}}</p>
+        </div>
+        <div class="row">
+            <p>edition</p>
+            <p>{% if book.edition%}{{book.edition}}{%else%} - {%endif%}</p>
+        </div>
+    </div>
+    
+    <div class="go-back">
+        <a href='{{"/library/" + book.library.id|string}}' > <- go back</a>
+    </div>
+    
+</div>
+{% endblock %}

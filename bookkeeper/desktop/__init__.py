@@ -24,10 +24,11 @@ class DesktopApp:
         self.server.add_url_rule("/create-main-user", "create main user", Route(create_main_user_page, db = self.db), methods = ["GET", "POST"])
         self.server.add_url_rule("/create-library", "create library", Route(create_library, db = self.db), methods = ["GET", "POST"])
         self.server.add_url_rule("/add-book/<id>", "add book", Route(add_book, db = self.db), methods = ["GET", "POST"])
-        self.server.add_url_rule("/add-author", "add author", Route(add_author, db = self.db), methods = ["GET", "POST"])
+        self.server.add_url_rule("/add-author/<id>", "add author", Route(add_author, db = self.db), methods = ["GET", "POST"])
         self.server.add_url_rule("/settings", "settings", Route(settings), methods = ["GET", "POST"])
         self.server.add_url_rule("/change-setting", "change setting", Route(change_setting), methods = ["POST"])
         self.server.add_url_rule("/library/<id>", "get library", Route(library, db = self.db))
+        self.server.add_url_rule("/book/<id>", "get book", Route(book, db = self.db))
 
 
     def run(self, ):

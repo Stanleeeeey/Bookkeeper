@@ -59,9 +59,9 @@ def add_book(id:int, db:Database):
         ))
         return redirect(f"/library/{id}")
     
-def add_author(db:Database):
+def add_author(id:int, db:Database):
     if request.method == "GET":
-        return render_page("forms/author.html")
+        return render_page("forms/author.html", library_id = id)
     else:
         db.add_author(Author(name = request.form.get("name"), surname = request.form.get("surname")))
         return redirect("/home")
@@ -79,3 +79,6 @@ def change_setting():
         return Response(status=200)
     else:
         return Response(status=403)
+    
+def book(id: int, db : Database):
+    return render_page('book.html', book = db.get_book_by_id(id).value)

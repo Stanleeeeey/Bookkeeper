@@ -1,0 +1,28 @@
+.body-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+}
+
+.book{
+    border: 2px solid var(--text-color);
+    border-radius: 5px 5px 0px 5px;
+    width:50vh;
+    padding: 1rem;
+}
+
+.row{
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 90%;
+    padding: .5rem;
+    display: grid;
+    grid-template-columns: 1fr  1fr;
+    transition: .1s;
+    gap:.5rem;
+}

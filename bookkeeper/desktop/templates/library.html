@@ -21,11 +21,14 @@
         </div>
         
             {% for book in books %}
-            <div class = "row">
+            <a href = '{{"/book/" + book.id|string}}' class = "row">
                 <p>{{book.title}}</p>
                 <p>{{book.author.name}} {{book.author.surname}}</p>
-            </div>
+            </a>
             {% endfor %}
+    </div>
+    <div class="go-back">
+        <a href="/home" > <- go back</a>
     </div>
 </div>
 {% endblock %}

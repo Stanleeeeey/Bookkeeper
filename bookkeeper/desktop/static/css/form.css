@@ -9,7 +9,6 @@
 
 form{
 
-    margin: 1rem;
     width:50vw;
     display: flex;
     flex-direction: column;
@@ -18,7 +17,7 @@ form{
     gap:1rem;
     min-height: fit-content;
     border: 2px solid var(--text-color);
-    border-radius: 5px;
+    border-radius: 5px 5px 0 5px;
     
 }
 
