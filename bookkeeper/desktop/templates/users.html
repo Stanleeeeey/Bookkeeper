@@ -1,0 +1,27 @@
+{%extends "base.html"%}
+
+{% block head%}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/users.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="contianer">
+    <h1>Users</h1>
+    <div class="users">
+        {%for user in users%}
+            <a href = "/user/{{user.id|string}}?go_back='/manage-users'" class="row">
+                <p>{{user.name}}</p>
+                <p>{% if user.surname%}{{user.surname}}{%else%} - {%endif%}</p>
+            </a>
+
+        {%endfor%}
+    </div>
+    <div class="go-back">
+
+        <a href='/home' > <svg xmlns="http://www.w3.org/2000/svg"   class="bi bi-arrow-left" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+</svg>home screen</a>
+    </div>
+    
+</div>
+{% endblock %}

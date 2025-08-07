@@ -1,35 +1,24 @@
 .body-wrapper{
-
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.content{
+.container{
     display: flex;
     flex-direction: column;
-    max-height: 50vh;
 }
 
-.book-wrap{
+.author{
     border: 2px solid var(--text-color);
-    min-width: 50vw;
+    border-radius: 5px 5px 0px 5px;
+    min-width:50vw;
     max-width: 90vw;
-    overflow-y: scroll;
     padding: 1rem;
-    border-radius: 5px 5px 0 5px ;
 }
 
-.book-wrap::-webkit-scrollbar{
-    display:none
-}
-
-.header{
-    border-bottom: 1px solid var(--text-color);
-    padding: .5rem;
-    display: grid;
-    grid-template-columns: 1fr  1fr;
-    gap:.5rem;
+.row a{
+    color: var(--text-color)
 }
 
 .row{
@@ -43,15 +32,12 @@
     gap:.5rem;
 }
 
-
-
 .row:hover{
+    color:var(--background-color);
     background-color: var(--text-color);
-    color: var(--background-color);
-    transition: .2s;
 }
 
-p{
+row p{
     overflow: hidden;
     white-space:nowrap;
     text-overflow: ellipsis;

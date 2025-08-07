@@ -28,14 +28,18 @@ class DesktopApp:
         self.server.add_url_rule("/settings", "settings", Route(settings), methods = ["GET", "POST"])
         self.server.add_url_rule("/change-setting", "change setting", Route(change_setting), methods = ["POST"])
         self.server.add_url_rule("/library/<id>", "get library", Route(library, db = self.db))
+        self.server.add_url_rule("/author/<id>", "get author", Route(author, db = self.db))
         self.server.add_url_rule("/book/<id>", "get book", Route(book, db = self.db))
+        self.server.add_url_rule("/manage-users", "manage users", Route(users, db = self.db))
+        self.server.add_url_rule("/user/<id>", "user", Route(user, db = self.db))
 
 
     def run(self, ):
         self.db = Database()
         self._initialize_server()
 
-        #self.server.run()
+        self.server.run()
 
         webview.create_window('Bookkeeper', self.server, min_size=(600, 600))        
-        webview.start(debug = True)
+        
+        #webview.start(debug = True)

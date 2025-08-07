@@ -54,8 +54,9 @@ def add_book(id:int, db:Database):
             author_id = request.form.get("author"),
             edition = request.form.get("edition"),
             status = 1,
+            user_id= 1,
             library_id = id,
-            used_by = 1
+
         ))
         return redirect(f"/library/{id}")
     
@@ -82,3 +83,13 @@ def change_setting():
     
 def book(id: int, db : Database):
     return render_page('book.html', book = db.get_book_by_id(id).value)
+
+def author(id: int, db:Database):
+    
+    return render_page("author.html", author = db.get_author_by_id(id).value, books = db.get_books_by_author_id(id))
+
+def users(db:Database):
+    return render_page("users.html", users = db.get_users())
+
+def user(id: int, db:Database):
+    return render_page("user.html", user = db.get_user_by_id(id).value, books = db.get_books_by_user_id(id))

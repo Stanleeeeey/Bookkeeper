@@ -42,7 +42,7 @@ class Library:
     
 
 class Book:
-    def __init__(self, title : str, author_id : int, edition: int, status : int, library_id : Library, used_by: User, id = None, author: Author = None, library: Library = None):
+    def __init__(self, title : str, author_id : int, edition: int, status : int, library_id : Library, user: User = None, user_id = None, id = None, author: Author = None, library: Library = None):
         self.id = id
         self.title = title
         self.author = author
@@ -50,11 +50,12 @@ class Book:
         self.edition = edition
         self.status = status
         self.library_id = library_id
-        self.used_by = used_by
+        self.user = user
+        self.user_id = user_id
         self.library = library
 
     def db(self) -> BookSchema:
-        return BookSchema(self.title, self.author_id, self.status, self.library_id, self.edition)
+        return BookSchema(self.title, self.author_id, self.status, self.library_id, self.edition, held_by=self.user_id)
     
         
     def from_db(book: BookSchema):
@@ -65,7 +66,8 @@ class Book:
             status = book.status,
             library = Library.from_db(book.library),
             library_id=book.library.id,
-            used_by = User.from_db(book.user),
+            user = User.from_db(book.user),
+            user_id = book.held_by,
             id = book.id,
             author = Author.from_db(book.author)
         )

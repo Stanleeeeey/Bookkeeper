@@ -97,6 +97,12 @@ class Database():
         session.close()
         return resp 
     
+    def get_users(self) -> DBResponse:
+        session =  Session(bind = self.engine)
+        resp =  DBResponse(DBMessage.OBJECT_LIST, [User.from_db(obj) for obj in session.query(UserSchema).all()])
+        session.close()
+        return resp 
+    
     #for now all the libraries belong only to one user, but just in case
     def get_libraries_by_user(self, user_id) -> DBResponse:
         session =  Session(bind = self.engine)
@@ -116,6 +122,13 @@ class Database():
         session.close()
         return resp 
     
+    def get_books_by_user_id(self, user_id) -> DBResponse:
+        session =  Session(bind = self.engine)
+        resp =  DBResponse(DBMessage.OBJECT_LIST, [Book.from_db(obj) for obj in session.query(UserSchema).where(UserSchema.id == user_id).first().books])
+        session.close()
+        return resp 
+    
+
     def get_book_by_id(self, id: int) -> DBResponse:
         session = Session(bind = self.engine)
         resp =  DBResponse(DBMessage.OBJECT , Book.from_db(session.query(BookSchema).where(BookSchema.id == id).first()))

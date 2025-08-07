@@ -6,7 +6,7 @@
 
 {% block add_to_nav %}
 
-<a href="/add-book/{{library.id}}">add book</a>
+<a href="/add-book/{{library.id}}?go_back={{url_for(request.endpoint, **request.view_args)}}">add book</a>
 {% endblock %}
 
 {% block body %}
@@ -21,14 +21,16 @@
         </div>
         
             {% for book in books %}
-            <a href = '{{"/book/" + book.id|string}}' class = "row">
+            <a href = "/book/{{book.id|string}}?go_back={{url_for(request.endpoint, **request.view_args)}}" class = "row">
                 <p>{{book.title}}</p>
                 <p>{{book.author.name}} {{book.author.surname}}</p>
             </a>
             {% endfor %}
     </div>
     <div class="go-back">
-        <a href="/home" > <- go back</a>
+        <a href="/home" > <svg xmlns="http://www.w3.org/2000/svg"   class="bi bi-arrow-left" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+</svg> go back</a>
     </div>
 </div>
 {% endblock %}

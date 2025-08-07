@@ -24,12 +24,14 @@ class BookSchema(Base):
     author  = relationship("AuthorSchema", back_populates = "books")
     library = relationship("LibrarySchema", back_populates = "books")
 
-    def __init__(self, title: str, author_id: int, status: int, library_id:int,  edition: int = None,):
+    def __init__(self, title: str, author_id: int, status: int, library_id:int,  edition: int = None,held_by : int = None):
         self.author_id = author_id
         self.title = title
         self.status = status
         self.library_id = library_id
         if edition != None: self.edition = edition
+        if held_by != None: self.held_by = held_by
+
 
     def __repr__(self):
         return f"{self.title} - {self.author}"

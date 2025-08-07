@@ -9,7 +9,7 @@
     flex-direction: column;
 }
 
-.book{
+.users{
     border: 2px solid var(--text-color);
     border-radius: 5px 5px 0px 5px;
     width:50vh;
