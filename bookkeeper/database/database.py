@@ -167,7 +167,7 @@ class Database():
             return DBResponse(DBMessage.DELETED, id)
         return DBResponse(DBMessage.BOOK_NOT_FOUND)
 
-    def modify_book(self, id, **options) -> DBResponse:
+    def edit_book(self, id, **options) -> DBResponse:
         session = Session(bind = self.engine)
         book = session.query(BookSchema).where(BookSchema.id == id).first()
         if book:
@@ -184,3 +184,17 @@ class Database():
 
             return DBResponse(DBMessage.MODIFIED)
         return DBResponse(DBMessage.BOOK_NOT_FOUND)
+    
+    def edit_user(self, id, **options) -> DBResponse:
+        session = Session(bind = self.engine)
+        user = session.query(UserSchema).where(UserSchema.id == id).first()
+
+        if user:
+            if 'name' in options:
+                user.name = options["name"]
+            if 'surname' in options:
+                user.surname = options["surname"]
+
+            session.commit()
+            return DBResponse(DBMessage.MODIFIED)
+        return DBResponse(DBMessage.USER_NOT_FOUND)

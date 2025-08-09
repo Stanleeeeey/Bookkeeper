@@ -42,7 +42,7 @@ class Library:
     
 
 class Book:
-    def __init__(self, title : str, author_id : int, edition: int, status : int, library_id : Library, user: User = None, user_id = None, id = None, author: Author = None, library: Library = None):
+    def __init__(self, title : str, author_id : int, edition: int, status : int, library_id : Library, user_id, user: User = None, id = None, author: Author = None, library: Library = None):
         self.id = id
         self.title = title
         self.author = author

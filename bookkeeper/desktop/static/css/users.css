@@ -30,3 +30,9 @@
     transition: .1s;
     gap:.5rem;
 }
+
+.row:hover{
+    background-color: var(--text-color);
+    color: var(--background-color);
+    transition: .2s;
+}

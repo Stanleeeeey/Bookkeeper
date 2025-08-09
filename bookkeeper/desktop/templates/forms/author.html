@@ -8,7 +8,7 @@
 {% block body %}
 
 <div>
-    <form action="/add-author" method = "post">
+    <form action="/add-author/{{library_id|string}}" method = "post">
 
         <label for="name">Author's name</label>
         <input type="text" name= "name" required>

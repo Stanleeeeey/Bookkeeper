@@ -17,7 +17,7 @@ class BookSchema(Base):
     status  = Column(Integer, nullable  = False)
 
     author_id  = Column(Integer, ForeignKey("authors.id"), nullable = False)
-    held_by    = Column(Integer, ForeignKey("users.id"), nullable = True)
+    held_by    = Column(Integer, ForeignKey("users.id"), nullable = False)
     library_id = Column(Integer, ForeignKey("libraries.id"), nullable = False)
 
     user    = relationship("UserSchema", back_populates = "books")

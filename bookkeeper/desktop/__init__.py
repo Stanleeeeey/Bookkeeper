@@ -21,11 +21,14 @@ class DesktopApp:
         self.server = Flask(__name__, static_folder='./static', template_folder='./templates')
         self.server.add_url_rule("/", "", Route(landing_page))
         self.server.add_url_rule("/home", "home", Route(home, db = self.db))
-        self.server.add_url_rule("/create-main-user", "create main user", Route(create_main_user_page, db = self.db), methods = ["GET", "POST"])
+        self.server.add_url_rule("/create-main-user", "create main user", Route(create_main_user, db = self.db), methods = ["GET", "POST"])
+        self.server.add_url_rule("/add-user", "add user", Route(add_user, db = self.db), methods = ["GET", "POST"])
+        self.server.add_url_rule("/edit-user/<id>", "edit user", Route(edit_user, db  =self.db), methods = ["GET", "POST"])
         self.server.add_url_rule("/create-library", "create library", Route(create_library, db = self.db), methods = ["GET", "POST"])
         self.server.add_url_rule("/add-book/<id>", "add book", Route(add_book, db = self.db), methods = ["GET", "POST"])
         self.server.add_url_rule("/add-author/<id>", "add author", Route(add_author, db = self.db), methods = ["GET", "POST"])
         self.server.add_url_rule("/settings", "settings", Route(settings), methods = ["GET", "POST"])
+        self.server.add_url_rule("/edit-book/<id>", "edit book", Route(edit_book, db  =self.db), methods = ["GET", "POST"])
         self.server.add_url_rule("/change-setting", "change setting", Route(change_setting), methods = ["POST"])
         self.server.add_url_rule("/library/<id>", "get library", Route(library, db = self.db))
         self.server.add_url_rule("/author/<id>", "get author", Route(author, db = self.db))
@@ -40,6 +43,6 @@ class DesktopApp:
 
         self.server.run()
 
-        webview.create_window('Bookkeeper', self.server, min_size=(600, 600))        
+        #webview.create_window('Bookkeeper', self.server, min_size=(600, 600))        
         
         #webview.start(debug = True)

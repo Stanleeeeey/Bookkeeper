@@ -20,7 +20,7 @@ def home(db : Database):
     return redirect("/create-main-user")
 
 
-def create_main_user_page(db : Database):
+def create_main_user(db : Database):
     if request.method == "GET":
         return render_page("forms/main-user.html")
     elif request.method == "POST":
@@ -28,6 +28,13 @@ def create_main_user_page(db : Database):
 
         set_setting("user-id", user_id.value)
         return redirect("/home")
+
+def add_user(db : Database):
+    if request.method == "GET":
+        return render_page("forms/user.html")
+    elif request.method == "POST":
+        user_id = db.add_user(User(name = request.form.get("name"), surname = request.form.get("surname")))
+        return redirect("/manage-users")
 
 def create_library( db: Database):
 
@@ -39,9 +46,10 @@ def create_library( db: Database):
         return redirect("/home")
     
 def library(id: int, db : Database):
-    library = library = db.get_library_by_id(id)
-
-    return render_page("library.html", library = db.get_library_by_id(id).value, books = db.get_books_by_library(id))
+    library = db.get_library_by_id(id)
+    books = db.get_books_by_library(id).value
+    books.sort(key  =lambda x: [x.author.surname, x.title])
+    return render_page("library.html", library = db.get_library_by_id(id).value, books= books)
 
 def add_book(id:int, db:Database):
     if request.method == "GET":
@@ -53,8 +61,8 @@ def add_book(id:int, db:Database):
             title = request.form.get("title"),
             author_id = request.form.get("author"),
             edition = request.form.get("edition"),
-            status = 1,
-            user_id= 1,
+            status = 1, #to be added,
+            user_id= get_setting("user-id"),
             library_id = id,
 
         ))
@@ -82,7 +90,8 @@ def change_setting():
         return Response(status=403)
     
 def book(id: int, db : Database):
-    return render_page('book.html', book = db.get_book_by_id(id).value)
+    book = db.get_book_by_id(id).value
+    return render_page('book.html', book = book, owned_by = db.get_user_by_id(book.user_id).value)
 
 def author(id: int, db:Database):
     
@@ -93,3 +102,27 @@ def users(db:Database):
 
 def user(id: int, db:Database):
     return render_page("user.html", user = db.get_user_by_id(id).value, books = db.get_books_by_user_id(id))
+
+def edit_book(id:int, db:Database):
+    if request.method == "GET":
+        return render_page("forms/edit-book.html", book = db.get_book_by_id(id).value, authors = db.get_authors().value, users = db.get_users().value)
+    elif request.method == "POST":
+        db.edit_book(id, 
+            title = request.form.get("title"),
+            author_id = request.form.get("author"),
+            edition = request.form.get("edition"),
+            status = 1, #to be added,
+            user_id= get_setting("user-id"),
+            library_id = id,
+
+        )
+        return redirect(f"/library/{id}")
+    
+def edit_user(id: int, db:Database):
+    print("halo")
+    if request.method == "GET":
+
+        return render_page("forms/edit-user.html", user = db.get_user_by_id(id).value)
+    elif request.method == "POST":
+        user_id = db.edit_user(id, name = request.form.get("name"), surname = request.form.get("surname"))
+        return redirect("/manage-users")

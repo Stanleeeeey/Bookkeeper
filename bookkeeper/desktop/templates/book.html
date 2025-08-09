@@ -13,8 +13,8 @@
             <a href="/author/{{book.author.id}}?go_back={{url_for(request.endpoint, **request.view_args)}}">{{book.author.name}} {{book.author.surname}}</a>
         </div>
         <div class="row">
-            <p>status</p>
-            <p>{{book.status}}</p>
+            <p>owned by</p>
+            <a href = "/user/{{owned_by.id}}">{{owned_by.name}} {{owned_by.surname}}</a>
         </div>
         <div class="row">
             <p>edition</p>

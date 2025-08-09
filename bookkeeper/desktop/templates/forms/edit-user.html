@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
+{% endblock %}
+
+
+{% block body %}
+
+<form action="/edit-user/{{user.id|string}}" method = 'POST'>
+
+    <label for="name">Name</label>
+    <input type="text" name = "name" required value = "{{user.name}}">
+    <label for="surname">Surname (optional)</label>
+    <input type="text" name = "surname" value = "{{user.surname}}">
+
+    <button action = "submit">edit user</button>
+</form>
+
+{% endblock %}
