@@ -209,3 +209,17 @@ class Database():
             session.commit()
             return DBResponse(DBMessage.MODIFIED)
         return DBResponse(DBMessage.USER_NOT_FOUND)
+    
+    def edit_author(self, id, **options):
+        session = Session(bind = self.engine)
+        author = session.query(AuthorSchema).where(AuthorSchema.id == id).first()
+
+        if author:
+            if 'name' in options:
+                author.name = options["name"]
+            if 'surname' in options:
+                author.surname = options["surname"]
+
+            session.commit()
+            return DBResponse(DBMessage.MODIFIED)
+        return DBResponse(DBMessage.AUTHOR_NOT_FOUND)

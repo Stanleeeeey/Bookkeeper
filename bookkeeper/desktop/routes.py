@@ -123,3 +123,12 @@ def edit_user(id: int, db:Database):
     elif request.method == "POST":
         user_id = db.edit_user(id, name = request.form.get("name"), surname = request.form.get("surname"))
         return redirect("/manage-users")
+    
+def edit_author(id:int, db:Database):
+    if request.method == "GET":
+
+        return render_page("forms/edit-author.html", author = db.get_author_by_id(id).value)
+    elif request.method == "POST":
+        user_id = db.edit_author(id, name = request.form.get("name"), surname = request.form.get("surname"))
+        return redirect(f"/author/{id}")
+    

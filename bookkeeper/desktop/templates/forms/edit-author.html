@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
+{% endblock %}
+
+
+{% block body %}
+
+<div>
+    <form action="/edit-author/{{author.id}}" method = "post">
+
+        <label for="name" >Author's name</label>
+        <input type="text" name= "name" required value = "{{author.name}}">
+
+        <label for="surname">Author's surname</label>
+        <input type="text" name= "surname" value = "{{author.surname}}">
+        <button type="submit">edit Author</button>
+
+    </form>
+    <div class="go-back">
+        <a href="/author/{{author.id}}" > <svg xmlns="http://www.w3.org/2000/svg"   class="bi bi-arrow-left" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+</svg> go back</a>
+    </div>
+</div>
+{% endblock %}

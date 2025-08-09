@@ -28,6 +28,7 @@ class DesktopApp:
         self.server.add_url_rule("/add-author/<id>", "add author", Route(add_author, db = self.db), methods = ["GET", "POST"])
         self.server.add_url_rule("/settings", "settings", Route(settings), methods = ["GET", "POST"])
         self.server.add_url_rule("/edit-book/<id>", "edit book", Route(edit_book, db  =self.db), methods = ["GET", "POST"])
+        self.server.add_url_rule("/edit-author/<id>", "edit author", Route(edit_author, db  =self.db), methods = ["GET", "POST"])
         self.server.add_url_rule("/change-setting", "change setting", Route(change_setting), methods = ["POST"])
         self.server.add_url_rule("/library/<id>", "get library", Route(library, db = self.db))
         self.server.add_url_rule("/author/<id>", "get author", Route(author, db = self.db))
