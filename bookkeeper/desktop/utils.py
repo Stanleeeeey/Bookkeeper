@@ -2,7 +2,7 @@ from bookkeeper.desktop.settings import get_setting
 from flask import render_template, request
 
 def render_page(template, **kwargs):
-    mode = get_setting("dark-mode", False)
+    mode = get_setting("dark-mode", )
     go_back = get_arg("go_back")
     
     return render_template(template, mode= "dark" if mode else "light", go_back = go_back, **kwargs)
