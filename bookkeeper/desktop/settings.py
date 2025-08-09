@@ -2,16 +2,6 @@ import json
 
 SETTING_URL = "setting.json"
 
-def initialize_settings():
-    f = open(SETTING_URL, "w")
-    f.write("{}")
-
-def open_settings():
-    try: return open(SETTING_URL, "r+")
-    except:
-        initialize_settings()
-        return open(SETTING_URL, "r+")
-
 class Settings:
     def __init__(self):
 
@@ -21,6 +11,17 @@ class Settings:
     def __getitem__(self, key):
         return self.data[key]
 
+
+def initialize_settings():
+    f = open(SETTING_URL, "w")
+    f.write("{}")
+
+def open_settings():
+    try: return open(SETTING_URL, "r+")
+    except:
+        initialize_settings()
+        return open(SETTING_URL, "r+")
+    
 def set_setting(key, value):
     f = open_settings()
     data = json.load(f)

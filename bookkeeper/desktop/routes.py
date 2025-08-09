@@ -1,12 +1,9 @@
 from bookkeeper.database.DTO import Author, Book
 from bookkeeper.database.database import Database
 from bookkeeper.database import Library, User
-from bookkeeper.desktop.utils import render_page, get_arg
-from flask import Response, render_template, request, redirect
+from bookkeeper.desktop.utils import render_page
+from flask import Response, request, redirect
 from bookkeeper.desktop.settings import Settings, get_setting, set_setting
-
-
-
 
 def landing_page():
     return render_page("launch.html")
@@ -20,7 +17,7 @@ def home(db : Database):
     return redirect("/create-main-user")
 
 
-def create_main_user(db : Database):
+def add_main_user(db : Database):
     if request.method == "GET":
         return render_page("forms/main-user.html")
     elif request.method == "POST":
@@ -36,7 +33,7 @@ def add_user(db : Database):
         user_id = db.add_user(User(name = request.form.get("name"), surname = request.form.get("surname")))
         return redirect("/manage-users")
 
-def create_library( db: Database):
+def add_library( db: Database):
 
     if request.method == "GET":
         return render_page("forms/library.html")
