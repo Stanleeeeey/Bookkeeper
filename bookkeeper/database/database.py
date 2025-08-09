@@ -2,12 +2,12 @@ from bookkeeper.database.models import *
 from sqlalchemy import create_engine
 from sqlalchemy.orm import  Session
 from sqlalchemy import Column, Integer, String
-
+import sys, os
 from bookkeeper.database.DTO import Book, Author, Library, User
-
-DB_URL = "sqlite:///example.db"
-
 from enum import Enum
+
+BASE_DIR = "bookkeeper"
+DB_NAME  = "bookkeeper.db"
 
 #Possible responses from db
 class DBMessage(Enum):
@@ -49,8 +49,19 @@ class DBResponse:
         else: ValueError("this response is not iterable")
 
 class Database():
+
+
     def __init__(self):
-        self.engine = create_engine(DB_URL, echo=False)
+        os.makedirs(os.path.join(os.getenv('APPDATA'),BASE_DIR), exist_ok=True)
+
+        if sys.platform.startswith('win'):
+            path = f"sqlite:///{os.path.join(os.getenv('APPDATA'), BASE_DIR, DB_NAME)}"
+            
+        else:
+            path = f"sqlite:///{os.path.join(os.path.expanduser("~"), ".config", BASE_DIR, DB_NAME)}"
+        path = path.replace('\\', "/")
+
+        self.engine = create_engine(path, echo=False)
         Base.metadata.create_all(self.engine)
 
     def add_book(self, book: Book) -> DBResponse:

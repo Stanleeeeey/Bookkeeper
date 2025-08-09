@@ -41,4 +41,4 @@ class DesktopApp:
         self._initialize_server()
 
         webview.create_window('Bookkeeper', self.server, min_size=(600, 600))        
-        webview.start(debug = True)
+        webview.start(icon = "static/assets/banner-light.png")
