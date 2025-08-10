@@ -155,5 +155,7 @@ class DesktopApp:
         """Starts and runs the app"""
         self._initialize_server()
 
+        self.server.run()
+
         webview.create_window('Bookkeeper', self.server, min_size=(600, 600))
-        webview.start(icon = "static/assets/banner-light.png")
+        #webview.start(icon = "static/assets/banner-light.png")

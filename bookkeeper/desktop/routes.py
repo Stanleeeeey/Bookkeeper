@@ -71,6 +71,8 @@ def add_library_page( db: Database):
 def library_page(library_id: int, db : Database):
     """returns a page with all the books in the library"""
 
+    print(library_id)
+
     library = db.get_library_by_id(library_id).value
     books = db.get_books_by_library(library_id).value
     books.sort(key  =lambda x: [x.author.surname, x.title])
@@ -90,10 +92,10 @@ def add_book_page(library_id:int, db:Database):
             edition = request.form.get("edition"),
             status = 1, #to be added,
             user_id= get_setting("user-id"),
-            library_id = id,
+            library_id = library_id,
 
         ))
-        return redirect(f"/library/{id}")
+        return redirect(f"/library/{library_id}")
 
 def add_author_page(db:Database):
     """Add author, library_id user to return to previous url"""
@@ -191,7 +193,7 @@ def edit_user_page(user_id: int, db:Database):
         )
 
     elif request.method == "POST":
-        db.edit_user(id, name = request.form.get("name"), surname = request.form.get("surname"))
+        db.edit_user(user_id, name = request.form.get("name"), surname = request.form.get("surname"))
         return redirect("/manage-users")
 
 def edit_author_page(author_id:int, db:Database):
@@ -205,5 +207,5 @@ def edit_author_page(author_id:int, db:Database):
         )
 
     elif request.method == "POST":
-        db.edit_author(id, name = request.form.get("name"), surname = request.form.get("surname"))
+        db.edit_author(author_id, name = request.form.get("name"), surname = request.form.get("surname"))
         return redirect(f"/author/{author_id}")

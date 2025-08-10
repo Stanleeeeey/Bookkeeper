@@ -12,7 +12,7 @@
         {%for book in books%}
             <a href = "/book/{{book.id|string}}?go_back={{url_for(request.endpoint, **request.view_args)}}" class="row">
                 <p>{{book.title}}</p>
-                <p>{{author.name}} {{author.surname}}</p>
+                <p>{{book.library.name}}</p>
             </a>
 
         {%endfor%}
