@@ -1,9 +1,19 @@
-import json, os , sys
+"""Modify and read settings from bookkeeper.json"""
+import json
+import os
+import sys
 
-SETTING = "setting.json"
-BASE_DIR = "bookkeeper"
+if sys.platform.startswith('win'):
+    os.makedirs(os.path.join(os.getenv('APPDATA'),"bookkeeper"), exist_ok=True)
+    PATH = os.path.join(os.getenv('APPDATA'), "bookkeeper", "bookkeeper.json")
+    PATH = PATH.replace("\\", "/")
+else:
+    os.makedirs(os.path.join(os.path.expanduser("~"), ".config", "bookkeeper"), exist_ok=True)
+    PATH = os.path.join(os.path.expanduser("~"), ".config", "bookkeeper", "bookkeeper.json")
+    PATH = PATH.replace("\\", "/")
 
 class Settings:
+    """class to store user settings"""
     def __init__(self):
 
         f = open_settings()
@@ -14,46 +24,30 @@ class Settings:
 
 
 def initialize_settings():
-    os.makedirs(os.path.join(os.getenv('APPDATA'),BASE_DIR), exist_ok=True)
-
-    if sys.platform.startswith('win'):
-        path = f"{os.path.join(os.getenv('APPDATA'), BASE_DIR, SETTING)}"
-            
-    else:
-        path = f"{os.path.join(os.path.expanduser("~"), ".config", BASE_DIR, SETTING)}"
-    path = path.replace('\\', "/")
-    f = open(path, "w")
+    """creates an empty json file"""
+    f = open(PATH, "w", encoding= "utf-8")
     f.write("{}")
 
 def open_settings():
-    os.makedirs(os.path.join(os.getenv('APPDATA'),BASE_DIR), exist_ok=True)
-
-    if sys.platform.startswith('win'):
-        path = f"{os.path.join(os.getenv('APPDATA'), BASE_DIR, SETTING)}"
-            
-    else:
-        path = f"{os.path.join(os.path.expanduser("~"), ".config", BASE_DIR, SETTING)}"
-
-    path = path.replace('\\', "/")
-    try: return open(path, "r+")
-    except:
+    """opens setting files and initializes empty if does not exist"""
+    try:
+        return open(PATH, "r+", encoding= "utf-8")
+    except OSError:
         initialize_settings()
-        return open(SETTING, "r+")
-    
+        return open(PATH, "r+", encoding = "utf-8")
+
 def set_setting(key, value):
+    """sets key to given value"""
     f = open_settings()
     data = json.load(f)
     data[key] = value
     f.seek(0)
     f.write(json.dumps(data))
-    f.truncate() 
-
-
+    f.truncate()
 
 def get_setting(key):
-
+    """returns a value from given key"""
     f = open_settings()
     data = json.load(f)
-    try: return data[key]
-    except: return None
 
+    return data.get(key)

@@ -1,15 +1,15 @@
+"""model definitions for sqlalchemy"""
+
 from bookkeeper.database.utils import is_within_chr_limit
 from sqlalchemy.orm import DeclarativeBase, relationship
 from sqlalchemy import Column, Integer, String, ForeignKey
 
-
-#MODELS for the database
-
 class Base(DeclarativeBase):
+    """shared values for all tables"""
     id      = Column(Integer, primary_key = True)
 
-
 class BookSchema(Base):
+    """schema of a book"""
     __tablename__ = "books"
 
     title   = Column(String, nullable  = False)

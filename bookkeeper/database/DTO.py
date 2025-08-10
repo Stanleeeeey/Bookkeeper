@@ -1,49 +1,65 @@
-
-from bookkeeper.database.models import *
+"""To be able to return database objects and read them"""
+from bookkeeper.database.models import AuthorSchema, BookSchema, LibrarySchema, UserSchema
 
 class Author:
-    def __init__(self, name: str, surname: str, id = None):
+    """Data tranfer object for Author"""
+    def __init__(self, name: str, surname: str, author_id = None):
         self.name= name
         self.surname = surname
-        self.id = id
+        self.id = author_id
 
     def db(self) -> AuthorSchema:
+        """converts DTO to db model"""
         return AuthorSchema(self.name, self.surname)
-    
+
+    @staticmethod
     def from_db(author: AuthorSchema):
+        """creates Author from db model"""
         return Author(author.name, author.surname, author.id)
 
 class User:
-    def __init__(self, name:str, surname: str, id = None):
+    """DTO object for user"""
+    def __init__(self, name:str, surname: str, user_id = None):
         self.name = name
         self.surname = surname
-        self.id = id
+        self.id = user_id
 
     def db(self) -> UserSchema:
+        """converts DTO to db model"""
         return UserSchema(self.name, self.surname)
-    
-        
+
+    @staticmethod
     def from_db(user: UserSchema):
-        if user: return User(user.name, user.surname, user.id)
+        """creates User from db model"""
+        return User(user.name, user.surname, user.id)
 
 class Library:
-    def __init__(self,  name:str, owned_by: int, id = None, owner: User = None):
-        self.id = id
+    """DTO object for library"""
+    def __init__(self,  name:str, owned_by: int, library_id = None, owner: User = None):
+        self.id = library_id
         self.name = name
         self.owned_by = owned_by
         self.owner = owner
 
-    
     def db(self) -> LibrarySchema:
+        """converts DTO to db model"""
         return LibrarySchema(self.name, self.owned_by)
-    
+
+    @staticmethod
     def from_db(library: LibrarySchema):
-        return Library(library.name, owned_by=User.from_db(library.user).id, id = library.id, owner = User.from_db(library.user))
-    
+        """creates Library from db model"""
+        return Library(
+            name = library.name,
+            owned_by=User.from_db(library.user).id,
+            library_id= library.id,
+            owner = User.from_db(library.user)
+        )
 
 class Book:
-    def __init__(self, title : str, author_id : int, edition: int, status : int, library_id : Library, user_id, user: User = None, id = None, author: Author = None, library: Library = None):
-        self.id = id
+    """DTO object for book"""
+
+    def __init__(self, title : str, author_id : int, edition: int, status : int, library_id : Library, user_id, user: User = None, book_id = None, author: Author = None, library: Library = None):
+        self.id = book_id
         self.title = title
         self.author = author
         self.author_id = author_id
@@ -55,10 +71,19 @@ class Book:
         self.library = library
 
     def db(self) -> BookSchema:
-        return BookSchema(self.title, self.author_id, self.status, self.library_id, self.edition, held_by=self.user_id)
-    
-        
+        """converts DTO to db model"""
+        return BookSchema(
+            title= self.title,
+            author_id= self.author_id,
+            status = self.status,
+            library_id=self.library_id,
+            edition=self.edition,
+            held_by=self.user_id
+        )
+
+    @staticmethod
     def from_db(book: BookSchema):
+        """creates Book from db model"""
         return Book(
             title = book.title,
             author_id = book.author.id,
@@ -68,6 +93,6 @@ class Book:
             library_id=book.library.id,
             user = User.from_db(book.user),
             user_id = book.held_by,
-            id = book.id,
+            book_id = book.id,
             author = Author.from_db(book.author)
         )
