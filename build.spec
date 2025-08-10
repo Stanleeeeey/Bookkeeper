@@ -23,7 +23,6 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    exclude_binaries=True,
     name='Bookkeeper',
     debug=False,
     bootloader_ignore_signals=False,
@@ -35,13 +34,8 @@ exe = EXE(
     icon='icon.ico'
 )
 
-coll = COLLECT(
+app = BUNDLE(
     exe,
-    a.binaries,
-    a.zipfiles,
-    a.datas,
-    strip=False,
-    upx=False,
-    upx_exclude=[],
-    name='Bookkeeper'
+    name='Bookkeeper.app',
+
 )
