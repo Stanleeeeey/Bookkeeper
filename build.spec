@@ -33,4 +33,4 @@ exe = EXE(
     console=False,
     icon='icon.ico'
 )
-app = BUNDLE(exe, name='Bookkeeper.exe', onefile=True)
+app = BUNDLE(exe, name='Bookkeeper.exe', onedir=True)

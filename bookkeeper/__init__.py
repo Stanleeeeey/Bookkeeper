@@ -2,5 +2,6 @@
 
 from bookkeeper.desktop import DesktopApp
 
-app = DesktopApp()
-app.run()
+if __name__ == "__main__":
+    app = DesktopApp()
+    app.run()
