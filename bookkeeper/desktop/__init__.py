@@ -2,7 +2,9 @@
 import webview
 from flask import Flask
 
-from bookkeeper.desktop.routes import *
+from bookkeeper.database.database import Database
+from bookkeeper.desktop.routes import launch_page, home_page, add_author_page, add_book_page, add_library_page, add_main_user_page, add_user_page, author_page, book_page, change_setting, edit_author_page, edit_book_page, edit_user_page, library_page, settings_page, user_page, users_page
+
 
 class Route:
     """Wrapper to accomadate additional arguments to routes functions"""

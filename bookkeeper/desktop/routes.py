@@ -180,7 +180,7 @@ def edit_book_page(book_id:int, db:Database):
             user_id= get_setting("user-id"),
             library_id = request.form.get("library_id"),
         )
-        return redirect(f"/library/{request.form.get("library_id")}")
+        return redirect(f"/library/{request.form.get('library_id')}")
 
 def edit_user_page(user_id: int, db:Database):
     """edits user with a given user_id"""
