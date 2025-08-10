@@ -1,4 +1,4 @@
-"""sys and os to determine db location, enum for DBMessage"""
+"""Read, edit, add to database"""
 import sys
 import os
 from enum import Enum
@@ -7,7 +7,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import  Session
 
 from bookkeeper.database.models import UserSchema, AuthorSchema, LibrarySchema, BookSchema, Base
-from bookkeeper.database.DTO import Book, Author, Library, User
+from bookkeeper.database.dto import Book, Author, Library, User
 
 BASE_DIR = "bookkeeper"
 DB_NAME  = "bookkeeper.db"

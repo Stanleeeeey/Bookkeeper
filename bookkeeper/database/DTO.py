@@ -1,5 +1,7 @@
-"""To be able to return database objects and read them"""
+"""Data transfer objects to communicate with the database"""
 from bookkeeper.database.models import AuthorSchema, BookSchema, LibrarySchema, UserSchema
+
+#DESIGN NOTE: It would probably be cleaner to have separate classes for creating objects and getting them
 
 class Author:
     """Data tranfer object for Author"""
@@ -58,7 +60,19 @@ class Library:
 class Book:
     """DTO object for book"""
 
-    def __init__(self, title : str, author_id : int, edition: int, status : int, library_id : Library, user_id, user: User = None, book_id = None, author: Author = None, library: Library = None):
+    def __init__(
+            self,
+            title : str,
+            author_id : int,
+            edition: int,
+            status : int,
+            library_id : Library,
+            user_id,
+            user: User = None,# those value are only known when getting object from db
+            book_id = None,
+            author: Author = None,
+            library: Library = None
+        ):
         self.id = book_id
         self.title = title
         self.author = author
@@ -78,7 +92,7 @@ class Book:
             status = self.status,
             library_id=self.library_id,
             edition=self.edition,
-            held_by=self.user_id
+            user_id=self.user_id
         )
 
     @staticmethod
@@ -92,7 +106,7 @@ class Book:
             library = Library.from_db(book.library),
             library_id=book.library.id,
             user = User.from_db(book.user),
-            user_id = book.held_by,
+            user_id = book.user_id,
             book_id = book.id,
             author = Author.from_db(book.author)
         )
