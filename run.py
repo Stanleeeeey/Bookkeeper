@@ -1,3 +1,3 @@
 """runs the app"""
 
-import bookkeeper
+import bookkeeper # pylint: disable=unused-import

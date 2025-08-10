@@ -3,11 +3,11 @@
 from sqlalchemy.orm import DeclarativeBase, relationship
 from sqlalchemy import Column, Integer, String, ForeignKey
 
-class Base(DeclarativeBase):
+class Base(DeclarativeBase): # pylint: disable=[too-few-public-methods, super-init-not-called]
     """shared values for all tables"""
     id      = Column(Integer, primary_key = True)
 
-class BookSchema(Base):
+class BookSchema(Base): # pylint: disable=too-few-public-methods
     """schema of a book"""
     __tablename__ = "books"
 
@@ -31,7 +31,7 @@ class BookSchema(Base):
             library_id:int,
             user_id : int,
             edition: int = None
-        ):
+        ): # pylint: [disable=super-init-not-called, too-many-arguments, too-many-positional-arguments]
 
         self.author_id = author_id
         self.title = title
@@ -55,7 +55,7 @@ class BookSchema(Base):
                 }
 
 
-class LibrarySchema(Base):
+class LibrarySchema(Base): # pylint: disable=too-few-public-methods
     """schema of a library for sqlalchemy"""
     __tablename__ = "libraries"
 
@@ -66,14 +66,14 @@ class LibrarySchema(Base):
     user   = relationship("UserSchema", back_populates = "libraries")
     books  = relationship("BookSchema", back_populates = "library")
 
-    def __init__(self, name, user_id):
+    def __init__(self, name, user_id): # pylint: disable=super-init-not-called
 
         self.name = name
         self.user_id = user_id
 
 
 
-class AuthorSchema(Base):
+class AuthorSchema(Base): # pylint: disable=too-few-public-methods
     """schema for author for sqlalchemy"""
     __tablename__ = 'authors'
 
@@ -92,12 +92,12 @@ class AuthorSchema(Base):
             "surname":self.surname
         }
 
-    def __init__(self, name, surname):
+    def __init__(self, name, surname): # pylint: disable=super-init-not-called
 
         self.name = name
         self.surname=  surname
 
-class UserSchema(Base):
+class UserSchema(Base): # pylint: disable=too-few-public-methods
     """User schema for the sqlalchemy"""
     __tablename__ = "users"
 
@@ -107,7 +107,7 @@ class UserSchema(Base):
     books = relationship("BookSchema", back_populates = "user")
     libraries = relationship("LibrarySchema", back_populates = "user")
 
-    def __init__(self, name, surname):
+    def __init__(self, name, surname): # pylint: disable=super-init-not-called
 
         self.name = name
         self.surname = surname

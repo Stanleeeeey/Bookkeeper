@@ -1,7 +1,8 @@
 """Data transfer objects to communicate with the database"""
 from bookkeeper.database.models import AuthorSchema, BookSchema, LibrarySchema, UserSchema
 
-#DESIGN NOTE: It would probably be cleaner to have separate classes for creating objects and getting them
+#DESIGN NOTE:
+# It would probably be cleaner to have separate classes for creating objects and getting them
 
 class Author:
     """Data tranfer object for Author"""
@@ -57,10 +58,10 @@ class Library:
             owner = User.from_db(library.user)
         )
 
-class Book:
+class Book: # pylint: disable=too-many-instance-attributes
     """DTO object for book"""
 
-    def __init__(
+    def __init__( # pylint: disable=[too-many-positional-arguments, too-many-arguments]
             self,
             title : str,
             author_id : int,
@@ -69,7 +70,7 @@ class Book:
             library_id : Library,
             user_id,
             user: User = None,# those value are only known when getting object from db
-            book_id = None,
+            book_id: int = None,
             author: Author = None,
             library: Library = None
         ):

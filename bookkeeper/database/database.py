@@ -29,7 +29,12 @@ class DBResponse:
     def __init__(self, message: DBMessage, value = None):
 
         self.message = message
-        if self.message in [DBMessage.OBJECT, DBMessage.OBJECT_LIST, DBMessage.CREATED, DBMessage.DELETED]:
+        if self.message in (
+            DBMessage.OBJECT,
+            DBMessage.OBJECT_LIST,
+            DBMessage.CREATED,
+            DBMessage.DELETED
+        ):
             if value is None:
                 raise ValueError("This DB message requires additional field - value")
             self.value = value
@@ -46,14 +51,16 @@ class DBResponse:
         return self.message.__str__()
 
     def __json__(self):
-        if self.message == DBMessage.OBJECT or self.message == DBMessage.CREATED: return self.value.__json__()
-        elif self.message == DBMessage.OBJECT_LIST:
+        if self.message in (DBMessage.OBJECT, self.message == DBMessage.CREATED):
+            return self.value.__json__()
+        if self.message == DBMessage.OBJECT_LIST:
             return [obj.__json__() for obj in self.value]
+        return None
 
     def __iter__(self):
         if self.message == DBMessage.OBJECT_LIST:
             return self.value.__iter__()
-        else: raise ValueError("this response is not iterable")
+        raise ValueError("this response is not iterable")
 
 class Database():
     """A class for interacting with the database"""
@@ -64,7 +71,12 @@ class Database():
         if sys.platform.startswith('win'):
             path = f"sqlite:///{os.path.join(os.getenv('APPDATA'), BASE_DIR, DB_NAME)}"
         else:
-            path = f"sqlite:///{os.path.join(os.path.expanduser("~"), ".config", BASE_DIR, DB_NAME)}"
+            path = f"sqlite:///{os.path.join(
+                os.path.expanduser("~"),
+                ".config",
+                BASE_DIR,
+                DB_NAME
+            )}"
         path = path.replace('\\', "/")
 
         self.engine = create_engine(path, echo=False)
@@ -108,92 +120,129 @@ class Database():
     def get_books(self) -> DBResponse:
         """Returns all books from the database"""
         session =  Session(bind = self.engine)
-        resp =  DBResponse(DBMessage.OBJECT_LIST, [Book.from_db(obj) for obj in session.query(BookSchema).all()])
+        resp =  DBResponse(
+            DBMessage.OBJECT_LIST,
+            [Book.from_db(obj) for obj in session.query(BookSchema).all()]
+        )
         session.close()
-        return resp 
+        return resp
 
     def get_authors(self) -> DBResponse:
         """Returns all authors from the database"""
         session =  Session(bind = self.engine)
-        resp =  DBResponse(DBMessage.OBJECT_LIST, [Author.from_db(obj) for obj in session.query(AuthorSchema).all()])
+        resp =  DBResponse(
+            DBMessage.OBJECT_LIST,
+            [Author.from_db(obj) for obj in session.query(AuthorSchema).all()]
+        )
         session.close()
-        return resp 
+        return resp
 
     def get_users(self) -> DBResponse:
         """Returns all users from the database"""
         session =  Session(bind = self.engine)
-        resp =  DBResponse(DBMessage.OBJECT_LIST, [User.from_db(obj) for obj in session.query(UserSchema).all()])
+        resp =  DBResponse(
+            DBMessage.OBJECT_LIST,
+            [User.from_db(obj) for obj in session.query(UserSchema).all()]
+        )
         session.close()
-        return resp 
+        return resp
 
     def get_libraries(self) -> DBResponse:
         """Returns all libraries from the database"""
         session =  Session(bind = self.engine)
-        resp = DBResponse(DBMessage.OBJECT_LIST, [Library.from_db(obj) for obj in session.query(LibrarySchema).all()])
+        resp = DBResponse(
+            DBMessage.OBJECT_LIST,
+            [Library.from_db(obj) for obj in session.query(LibrarySchema).all()]
+        )
         session.close()
-        return resp 
+        return resp
 
     def get_library_by_id(self, library_id):
         """Returns library with matching id from the database"""
         session = Session(bind = self.engine)
-        resp = DBResponse(DBMessage.OBJECT , Library.from_db(session.query(LibrarySchema).where(LibrarySchema.id == library_id).first()))
+        resp = DBResponse(
+            DBMessage.OBJECT,
+            Library.from_db(
+                session.query(LibrarySchema).where(LibrarySchema.id == library_id).first()
+            )
+        )
         session.close()
-        return resp 
+        return resp
 
     def get_books_by_author_id(self, author_id) -> DBResponse:
         """Returns all the books from author with a given id"""
         session =  Session(bind = self.engine)
-        resp =  DBResponse(DBMessage.OBJECT_LIST, [Book.from_db(obj) for obj in session.query(AuthorSchema).where(AuthorSchema.id == author_id).first().books])
+        books = session.query(AuthorSchema).where(AuthorSchema.id == author_id).first().books
+        resp = DBResponse(
+            DBMessage.OBJECT_LIST,
+            [Book.from_db(obj) for obj in books]
+        )
         session.close()
         return resp
 
     def get_books_by_user_id(self, user_id) -> DBResponse:
         """Returns all the books currently owned by the given user"""
         session =  Session(bind = self.engine)
-        resp =  DBResponse(DBMessage.OBJECT_LIST, [Book.from_db(obj) for obj in session.query(UserSchema).where(UserSchema.id == user_id).first().books])
+        books = session.query(UserSchema).where(UserSchema.id == user_id).first().books
+        resp = DBResponse(
+            DBMessage.OBJECT_LIST,
+            [Book.from_db(obj) for obj in books]
+        )
         session.close()
-        return resp 
-    
+        return resp
 
     def get_book_by_id(self, book_id: int) -> DBResponse:
         """Returns book with given id"""
         session = Session(bind = self.engine)
-        resp =  DBResponse(DBMessage.OBJECT , Book.from_db(session.query(BookSchema).where(BookSchema.id == book_id).first()))
+        resp = DBResponse(
+            DBMessage.OBJECT,
+            Book.from_db(session.query(BookSchema).where(BookSchema.id == book_id).first())
+        )
         session.close()
-        return resp 
+        return resp
 
     def get_books_by_library(self, library_id : int) -> DBResponse:
         """Returns all the books from the library with a given id"""
         session =  Session(bind = self.engine)
-        resp =  DBResponse(DBMessage.OBJECT_LIST, [Book.from_db(obj) for obj in session.query(LibrarySchema).where(LibrarySchema.id == library_id).first().books])
+        books = session.query(LibrarySchema).where(LibrarySchema.id == library_id).first().books
+        resp = DBResponse(
+            DBMessage.OBJECT_LIST,
+            [Book.from_db(obj) for obj in books]
+        )
         session.close()
-        return resp 
+        return resp
 
     def get_author_by_id(self, author_id: int) -> DBResponse:
         """Returns author with a given id"""
         session = Session(bind = self.engine)
-        resp =  DBResponse(DBMessage.OBJECT, Author.from_db(session.query(AuthorSchema).where(AuthorSchema.id == author_id).first()))
+        resp = DBResponse(
+            DBMessage.OBJECT,
+            Author.from_db(session.query(AuthorSchema).where(AuthorSchema.id == author_id).first())
+        )
         session.close()
-        return resp 
-    
+        return resp
+
     def get_user_by_id(self, user_id: int) -> DBResponse:
         """Returns user with a matching id from the database"""
         session = Session(bind = self.engine)
-        resp =  DBResponse(DBMessage.OBJECT, User.from_db(session.query(UserSchema).where(UserSchema.id == user_id).first()))
+        resp = DBResponse(
+            DBMessage.OBJECT,
+            User.from_db(session.query(UserSchema).where(UserSchema.id == user_id).first())
+        )
         return resp
 
     def does_author_exist(self, author_id:int) -> bool:
         """Checks if author with a given id exists in the database"""
         try:
             return self.get_author_by_id(author_id) is not None
-        except:
+        except AttributeError:
             return False
 
     def delete_book(self, book_id:int):
         """deletes a book with a given id"""
         session = Session(bind = self.engine)
         book = session.query(BookSchema).where(BookSchema.id == book_id).first()
-        if book: 
+        if book:
             session.delete(book)
             session.commit()
             return DBResponse(DBMessage.DELETED, id)

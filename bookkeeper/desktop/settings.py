@@ -12,7 +12,7 @@ else:
     PATH = os.path.join(os.path.expanduser("~"), ".config", "bookkeeper", "bookkeeper.json")
     PATH = PATH.replace("\\", "/")
 
-class Settings:
+class Settings: # pylint: disable=too-few-public-methods
     """class to store user settings"""
     def __init__(self):
 
@@ -25,8 +25,8 @@ class Settings:
 
 def initialize_settings():
     """creates an empty json file"""
-    f = open(PATH, "w", encoding= "utf-8")
-    f.write("{}")
+    with open(PATH, "w", encoding= "utf-8") as f:
+        f.write("{}")
 
 def open_settings():
     """opens setting files and initializes empty if does not exist"""

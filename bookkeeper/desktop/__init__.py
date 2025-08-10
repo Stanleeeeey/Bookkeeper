@@ -3,10 +3,28 @@ import webview
 from flask import Flask
 
 from bookkeeper.database.database import Database
-from bookkeeper.desktop.routes import launch_page, home_page, add_author_page, add_book_page, add_library_page, add_main_user_page, add_user_page, author_page, book_page, change_setting, edit_author_page, edit_book_page, edit_user_page, library_page, settings_page, user_page, users_page
+from bookkeeper.desktop.routes import (
+    launch_page,
+    home_page,
+    add_author_page,
+    add_book_page,
+    add_library_page,
+    add_main_user_page,
+    add_user_page,
+    author_page,
+    book_page,
+    change_setting,
+    edit_author_page,
+    edit_book_page,
+    edit_user_page,
+    library_page,
+    settings_page,
+    user_page,
+    users_page
+)
 
 
-class Route:
+class Route: # pylint: disable=too-few-public-methods
     """Wrapper to accomadate additional arguments to routes functions"""
     def __init__(self,url, endpoint, action, methods = None, **kwargs):
         self.url = url
@@ -22,10 +40,10 @@ class Route:
 
         return self.action(**kwargs, **self.kwargs)
 
-class DesktopApp:
+class DesktopApp: # pylint: disable=too-few-public-methods
     """Class taking care of a deskotp application"""
 
-    def __init__(self, api_url= ""):
+    def __init__(self, api_url= ""): # pylint: disable=too-few-public-methods
         self.api_url = api_url
 
         self.db = Database()
@@ -89,7 +107,6 @@ class DesktopApp:
                 "/settings",
                 "settings",
                 settings_page,
-                methods = ["GET", "POST"]
             ),
             Route(
                 "/edit-book/<book_id>",
@@ -152,7 +169,7 @@ class DesktopApp:
                 route,
                 methods = route.methods
             )
-   
+
     def run(self, ):
         """Starts and runs the app"""
         self._initialize_server()

@@ -29,7 +29,7 @@ def add_main_user_page(db : Database):
 
     if request.method == "GET":
         return render_page("forms/main-user.html")
-    elif request.method == "POST":
+    if request.method == "POST":
         user_id = db.add_user(
             User(
                 name = request.form.get("name"),
@@ -39,13 +39,14 @@ def add_main_user_page(db : Database):
 
         set_setting("user-id", user_id.value)
         return redirect("/home")
+    return Response(status=405)
 
 def add_user_page(db : Database):
     """add a user form"""
 
     if request.method == "GET":
         return render_page("forms/user.html")
-    elif request.method == "POST":
+    if request.method == "POST":
         db.add_user(
             User(
                 name = request.form.get("name"),
@@ -53,13 +54,14 @@ def add_user_page(db : Database):
             )
         )
         return redirect("/manage-users")
+    return Response(status=405)
 
 def add_library_page( db: Database):
     """add a library form"""
 
     if request.method == "GET":
         return render_page("forms/library.html")
-    else:
+    if request.method == "POST":
         db.add_library(
             Library(
                 name = request.form.get("name"),
@@ -67,11 +69,10 @@ def add_library_page( db: Database):
         ))
 
         return redirect("/home")
+    return Response(status=405)
 
 def library_page(library_id: int, db : Database):
     """returns a page with all the books in the library"""
-
-    print(library_id)
 
     library = db.get_library_by_id(library_id).value
     books = db.get_books_by_library(library_id).value
@@ -83,7 +84,7 @@ def add_book_page(library_id:int, db:Database):
 
     if request.method == "GET":
         return render_page("forms/book.html", library_id = library_id, authors = db.get_authors())
-    else:
+    if request.method == "POST":
         print(request.form.get("author"))
 
         db.add_book(Book(
@@ -96,13 +97,15 @@ def add_book_page(library_id:int, db:Database):
 
         ))
         return redirect(f"/library/{library_id}")
+    return Response(status=405)
 
 def add_author_page(db:Database):
     """Add author, library_id user to return to previous url"""
 
     if request.method == "GET":
         return render_page("forms/author.html")
-    else:
+
+    if request.method == "POST":
         db.add_author(
             Author(
                 name = request.form.get("name"),
@@ -110,12 +113,12 @@ def add_author_page(db:Database):
             )
         )
         return redirect("/home")
+    return Response(status=405)
 
 def settings_page():
     """returns page to control settings"""
 
-    if request.method == "GET":
-        return render_page("settings.html", settings = Settings())
+    return render_page("settings.html", settings = Settings())
 
 def change_setting():
     """endpoint to change settings without submitting form, accessed by js"""
@@ -126,8 +129,8 @@ def change_setting():
         set_setting(setting, value)
 
         return Response(status=200)
-    else:
-        return Response(status=403)
+
+    return Response(status=403)
 
 def book_page(book_id: int, db : Database):
     """returns a page with book information"""
@@ -170,7 +173,7 @@ def edit_book_page(book_id:int, db:Database):
             users = db.get_users().value
         )
 
-    elif request.method == "POST":
+    if request.method == "POST":
         db.edit_book(
             book_id,
             title = request.form.get("title"),
@@ -181,6 +184,7 @@ def edit_book_page(book_id:int, db:Database):
             library_id = request.form.get("library_id"),
         )
         return redirect(f"/library/{request.form.get('library_id')}")
+    return Response(status=405)
 
 def edit_user_page(user_id: int, db:Database):
     """edits user with a given user_id"""
@@ -192,9 +196,14 @@ def edit_user_page(user_id: int, db:Database):
             user = db.get_user_by_id(user_id).value
         )
 
-    elif request.method == "POST":
-        db.edit_user(user_id, name = request.form.get("name"), surname = request.form.get("surname"))
+    if request.method == "POST":
+        db.edit_user(
+            user_id,
+            name = request.form.get("name"),
+            surname = request.form.get("surname")
+        )
         return redirect("/manage-users")
+    return Response(status=405)
 
 def edit_author_page(author_id:int, db:Database):
     """edits author with a given id"""
@@ -206,6 +215,11 @@ def edit_author_page(author_id:int, db:Database):
             author = db.get_author_by_id(author_id).value
         )
 
-    elif request.method == "POST":
-        db.edit_author(author_id, name = request.form.get("name"), surname = request.form.get("surname"))
+    if request.method == "POST":
+        db.edit_author(
+            author_id,
+            name = request.form.get("name"),
+            surname = request.form.get("surname")
+        )
         return redirect(f"/author/{author_id}")
+    return Response(status=405)
