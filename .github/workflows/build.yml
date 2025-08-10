@@ -29,7 +29,7 @@ jobs:
       - name: Upload EXE artifact
         uses: actions/upload-artifact@v4
         with:
-          name: bookkeeper
+          name: bookkeeper_win
           path: dist/**
   build-macos:
     runs-on: macos-latest
@@ -50,5 +50,5 @@ jobs:
       - name: Upload EXE artifact
         uses: actions/upload-artifact@v4
         with:
-          name: bookkeeper
+          name: bookkeeper_macos
           path: dist/**
