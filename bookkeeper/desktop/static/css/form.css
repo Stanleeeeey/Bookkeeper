@@ -33,7 +33,7 @@ input{
 select{
     padding:.5rem;
     background-color: var(--background-color);
-
+    color: var(--text-color);
     border-radius: 2px;
     overflow-y: scroll;
     width: 30vw;
