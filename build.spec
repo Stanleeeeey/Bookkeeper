@@ -24,6 +24,7 @@ exe = EXE(
     a.datas,
     [],
     name='Bookkeeper',
+    version="version.txt",
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -34,8 +35,12 @@ exe = EXE(
     icon='icon.ico'
 )
 
-app = BUNDLE(
+coll = COLLECT(
     exe,
-    name='Bookkeeper.app',
-
+    a.binaries,
+    a.zipfiles,
+    a.datas,
+    strip=False,
+    upx=False,
+    name='Bookkeeper',
 )

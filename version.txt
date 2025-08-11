@@ -1,0 +1,33 @@
+# UTF-8
+VSVersionInfo(
+    ffi=FixedFileInfo(
+        filevers=(1, 0, 0, 0),     # Major, Minor, Patch, Build
+        prodvers=(1, 0, 0, 0),     # Product version
+        mask=0x3f,
+        flags=0x0,
+        OS=0x4,                    # VOS_NT_WINDOWS32
+        fileType=0x1,              # VFT_APP
+        subtype=0x0,
+        date=(0, 0)
+    ),
+    kids=[
+        StringFileInfo([
+            StringTable(
+                u'040904B0',  # US English + Unicode
+                [
+                    StringStruct(u'CompanyName', u'St@n!ey'),
+                    StringStruct(u'FileDescription', u'Bookkeeper — Personal Library Manager'),
+                    StringStruct(u'FileVersion', u'1.0.2'),
+                    StringStruct(u'InternalName', u'Bookkeeper'),
+                    StringStruct(u'LegalCopyright', u'© 2025 Stanislaw Software'),
+                    StringStruct(u'OriginalFilename', u'Bookkeeper.exe'),
+                    StringStruct(u'ProductName', u'Bookkeeper'),
+                    StringStruct(u'ProductVersion', u'1.0.2')
+                ]
+            )
+        ]),
+        VarFileInfo([
+            VarStruct(u'Translation', [1033, 1200])  # Language ID, Codepage
+        ])
+    ]
+)
