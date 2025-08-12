@@ -40,7 +40,13 @@ coll = COLLECT(
     a.binaries,
     a.zipfiles,
     a.datas,
+    version="version.txt",
     strip=False,
     upx=False,
     name='Bookkeeper',
+)
+
+app = BUNDLE(
+    exe,
+    name='Bookkeeper.app',
 )
