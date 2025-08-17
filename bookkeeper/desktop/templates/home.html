@@ -13,17 +13,20 @@
 {% endblock %}
 {% block body %}
 
-<div class="content-wrap">
-    
-    <div class="libraries-wrap">
-        <h1>Your libraries</h1>
-        <div class="libraries-list">
-            {% for library in libraries %}
-            <a class = "library" href='{{"/library/" +library.id|string}}'>{{library.name}}</a>
-            {% endfor %}
 
-            <a class = "add-library" href="/create-library">add library</a>
+    
+    <div class="wrap">
+        <h1>Your libraries</h1>
+        
+        <div class="libraries-menu">
+            <div class="list">
+
+                {% for library in libraries %}
+                <a class = "library" href='{{"/library/" +library.id|string}}'>{{library.name}}</a>
+                {% endfor %}
+            </div>
+            <a class = "add" href="/create-library">add library</a>
         </div>
     </div>
-</div>
+
 {% endblock %}

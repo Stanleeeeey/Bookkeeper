@@ -4,16 +4,13 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/users.css') }}">
 {% endblock %}
 
-{% block add_to_nav %}
-
-<a href="/add-user">add user</a>
-{% endblock %}
 
 
 {% block body %}
-<div class="contianer">
+<div class="wrap">
     <h1>Users</h1>
-    <div class="users">
+    <div class="users-menu">
+        <div class="list">
         {%for user in users%}
             <a href = "/user/{{user.id|string}}?go_back='/manage-users'" class="row">
                 <p>{{user.name}}</p>
@@ -21,6 +18,8 @@
             </a>
 
         {%endfor%}
+        </div>
+        <a class = "add" href="/add-user">add user</a>
     </div>
     <div class="go-back">
 

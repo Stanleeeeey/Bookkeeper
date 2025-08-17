@@ -1,91 +1,10 @@
 
-.content-wrap{
-
-    height:100%;
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-.content-wrap h1{
-    text-align: left;
-    width:100%
-}
-
-.libraries-wrap{
 
 
-    display: flex;
-    flex-direction: column;
-
-    align-items: center;
-
-    overflow: hidden;
-}
-
-.libraries-list{
-    min-width: 50vw;
-    overflow-y: scroll;
-    width:100%;
-    max-height: 30vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 2px solid var(--text-color);
-    padding: 1rem;
-    border-radius: 5px;
-
-    max-width: 50vw;
-
-}
-
-.libraries-list::-webkit-scrollbar{
-    display:none;
-}
-
-.library{
-    text-decoration: none;
-    overflow:hidden;
-    text-overflow: ellipsis;
-    white-space:nowrap;
-    color: var(--text-color);
-    padding:.5rem;
-    width:100%;
-    text-align: center;
-    box-sizing: border-box;
-    transition: .1s;
-}
-
-.library:hover{
-    background-color: var(--text-color);
-    color: var(--background-color);
-    border-radius: 2px;
-    box-sizing: border-box;
-    transition: .2s;
-
-}
-
-.add-library{
-    text-decoration: none;
-    overflow:hidden;
-    text-overflow: ellipsis;
-    white-space:nowrap;
-    color: var(--text-color);
-    padding:.5rem;
+.libraries-menu{
     border: 1px solid var(--text-color);
-    border-radius: 2px;
-    width: 100%;
-    box-sizing: border-box;
-    text-align: center;
-    transition: .1s;
-}
-
-.add-library:hover{
-    background-color: var(--text-color);
-    color: var(--background-color);
-    transition: .2s;
+    border-radius: 5px;
     
-
+    min-width: 50vw;
 }
+
