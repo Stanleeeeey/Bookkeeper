@@ -9,8 +9,8 @@
     flex-direction: column;
 }
 
-.user{
-    border: 2px solid var(--text-color);
+.user-menu{
+    border: 1px solid var(--text-color);
     border-radius: 5px 5px 0px 5px;
     min-width:50vw;
     max-width: 90vw;
@@ -25,7 +25,7 @@
     color: var(--text-color);
     text-decoration: none;
     font-size: 90%;
-    padding: .5rem;
+
     display: grid;
     grid-template-columns: 1fr  1fr;
     transition: .1s;
@@ -44,5 +44,5 @@ row p{
 }
 
 .info{
-    padding: .3rem;
+    padding-bottom: .5rem;
 }

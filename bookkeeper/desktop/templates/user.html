@@ -7,17 +7,19 @@
 {% block body %}
 <div class="contianer">
     <h1>{{user.name}} {{user.surname}}</h1>
-    <div class="user">
+    <div class="user-menu">
         
-        <div class="info">books currently owned by this user</div>
-        
-        {%for book in books%}
-            <a href = "/book/{{book.id|string}}?go_back={{url_for(request.endpoint, **request.view_args)}}" class="row">
-                <p>{{book.title}}</p>
-                <p>{{book.author.name}} {{book.author.surname}}</p>
-            </a>
+        <div class="list">
+            <div class="info">books currently owned by this user</div>
+            
+            {%for book in books%}
+                <a href = "/book/{{book.id|string}}?go_back={{url_for(request.endpoint, **request.view_args)}}" class="row">
+                    <p>{{book.title}}</p>
+                    <p>{{book.author.name}} {{book.author.surname}}</p>
+                </a>
 
-        {%endfor%}
+            {%endfor%}
+        </div>
     </div>
     
     <div class="go-back">

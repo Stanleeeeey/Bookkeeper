@@ -20,7 +20,7 @@
             {% endfor %}
             
         </select>
-        <a href="/add-author/{{library_id}}">don't see your author? add one</a>
+        <a href="/add-author?go_back={{url_for(request.endpoint, **request.view_args)}}" class = "underline">don't see your author? add one</a>
         <label for="edition" value = "{{book.edition}}">Edition (optional)</label>
         <input type="number" name= "edition">
 
