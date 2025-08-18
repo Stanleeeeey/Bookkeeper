@@ -12,19 +12,26 @@
         <h1>Bookkeeper's settings</h1>
         <div class="settings">
             <div class="setting">
-                <p>dark mode</p>
+                <p>App's style</p>
+                <div class="options">
+                    <select name="style" id="" onchange = "set_setting(this, 'mode')">
+                        
+                        <option value="fantasy-light" {%if mode == "fantasy-light"%}selected{%endif%}>fantasy light</option>
+                        <option value="fantasy-dark" {%if mode == "fantasy-dark"%}selected{%endif%}>fantasy dark</option>
+                        <option value="retro-light" {%if mode == "retro-light"%}selected{%endif%}>1970</option>
+                        
+                    </select>
+                </div>
 
-                <input type="checkbox"  onchange = "change_setting(this, 'dark-mode')" {% if settings["dark-mode"] %} checked {%endif%}>
-                <span class="checkbox"></span>
             </div>
             <div class="setting">
                 <div class="info">
                     <p>API</p>
                     <p class="disclosure">To be added</p>
                 </div>
-                
-                <input type="checkbox" onchange = "change_setting(this, 'api')" {% if settings["api"] %} checked {%endif%} disabled>
-                <span class="checkbox"></span>
+                <div class="option">
+                    <input type="checkbox" onchange = "change_setting(this, 'api')" {% if settings["api"] %} checked {%endif%} disabled>
+                </div>
             </div>
             
             

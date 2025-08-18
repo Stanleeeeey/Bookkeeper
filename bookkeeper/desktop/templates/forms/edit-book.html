@@ -15,7 +15,7 @@
         <label for="author">Author</label>
         <select name= "author" required value = "{{book.author.id}}">
             {% for author in authors %}
-                <option value="{{author.id}}">{{author.name}} {{author.surname}}</option>
+                <option value="{{author.id}}" {%if book.author.id == author.id %} selected="selected" {%endif%}>{{author.name}} {{author.surname}} </option>
 
             {% endfor %}
             

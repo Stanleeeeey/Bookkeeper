@@ -10,11 +10,19 @@
 }
 
 .user-menu{
-    border: 1px solid var(--text-color);
-    border-radius: 5px 5px 0px 5px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--outer-border-radius);
+    border-bottom-right-radius: 0;
     min-width:50vw;
     max-width: 90vw;
     padding: 1rem;
+
+    box-shadow: 
+        var(--box-shadow-size)
+        var(--box-shadow-size)
+        0 
+        var(--border-color);
+    
 }
 
 .row a{
@@ -32,14 +40,12 @@
     gap:.5rem;
 }
 
-.row:hover{
-    color:var(--background-color);
-    background-color: var(--text-color);
-}
+
 
 row p{
     overflow: hidden;
     white-space:nowrap;
+    text-align: left;
     text-overflow: ellipsis;
 }
 

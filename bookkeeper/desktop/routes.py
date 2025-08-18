@@ -124,7 +124,9 @@ def change_setting():
     """endpoint to change settings without submitting form, accessed by js"""
 
     setting = request.json.get("setting")
+
     value = request.json.get("value")
+
     if setting is not None and value is not None:
         set_setting(setting, value)
 
