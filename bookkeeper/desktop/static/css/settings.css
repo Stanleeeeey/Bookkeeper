@@ -6,6 +6,12 @@
     align-items: center;
     flex-direction: column;
 
+    box-shadow: 
+        var(--box-shadow-size)
+        var(--box-shadow-size)
+        0 
+        var(--border-color);   
+
 }
 
 
@@ -24,7 +30,10 @@
     padding-bottom: 1rem;
     padding-top: 1rem;
     justify-content: space-between;
+    text-align: left;
+    
 }
+
 
 .setting:hover{
     background-color: var(--active-color);

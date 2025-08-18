@@ -7,10 +7,10 @@ def render_page(template, **kwargs):
     """a wrapper arounf render_template.
     Adds additional information about user preferred mode and previous page"""
 
-    mode = get_setting("dark-mode", )
+    mode = get_setting("mode", )
     go_back = get_arg("go_back")
 
-    return render_template(template, mode= "dark" if mode else "light", go_back = go_back, **kwargs)
+    return render_template(template, mode= mode, go_back = go_back, **kwargs)
 
 def get_arg(arg_name: str, cast_to :type = str):
     """gets arg from te url"""

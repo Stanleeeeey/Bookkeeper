@@ -16,6 +16,11 @@
     max-width:90vw;
     min-width: 50vw;
     padding: 1rem;
+    box-shadow: 
+        var(--box-shadow-size)
+        var(--box-shadow-size)
+        0 
+        var(--border-color);   
 }
 
 .row a{

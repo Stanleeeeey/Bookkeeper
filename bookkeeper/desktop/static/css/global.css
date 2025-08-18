@@ -11,7 +11,7 @@
 
 }
 
-.dark{
+.fantasy-dark{
     --background-color: #0b0b09;
     --text-color: #e7e5de;
     --border-color: #e7e5de;
@@ -23,7 +23,7 @@
 
 }
 
-.light{
+.fantasy-light{
     --background-color: #e7e5de;
     --border-color: #131412;
     --text-color:#131412;
@@ -36,7 +36,7 @@
     --outer-border-radius: 5px;
 }
 
-.retro{
+.retro-light{
     --background-color: #F5E9DA;
     --text-color:#6B4226;
     --border-color: #D2691E;

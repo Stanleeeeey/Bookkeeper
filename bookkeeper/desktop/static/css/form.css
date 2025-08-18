@@ -19,6 +19,11 @@ form{
     border: 1px solid var(--text-color);
     border-radius:var(--outer-border-radius);
     border-bottom-right-radius: 0;
+    box-shadow: 
+        var(--box-shadow-size)
+        var(--box-shadow-size)
+        0 
+        var(--border-color);   
     
 }
 
