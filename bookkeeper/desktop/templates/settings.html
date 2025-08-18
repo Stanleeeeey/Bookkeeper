@@ -12,7 +12,14 @@
         <h1>Bookkeeper's settings</h1>
         <div class="settings">
             <div class="setting">
-                <p>dark mode</p>
+                <p>App's style</p>
+                <select name="style" id="">
+                    
+                    <option value="light">fantasy light</option>
+                    <option value="dark">fantasy dark</option>
+                    <option value="dark">1970</option>
+                    
+                </select>
 
                 <input type="checkbox"  onchange = "change_setting(this, 'dark-mode')" {% if settings["dark-mode"] %} checked {%endif%}>
                 <span class="checkbox"></span>

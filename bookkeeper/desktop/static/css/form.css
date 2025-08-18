@@ -16,8 +16,9 @@ form{
     padding: 1rem;
     gap:1rem;
     min-height: fit-content;
-    border: 2px solid var(--text-color);
-    border-radius: 5px 5px 0 5px;
+    border: 1px solid var(--text-color);
+    border-radius:var(--outer-border-radius);
+    border-bottom-right-radius: 0;
     
 }
 
@@ -26,7 +27,7 @@ input{
     padding: 0.5rem;
     background-color: transparent;
     color: var(--text-color);
-    border: 1px solid var(--text-color);
+    border: 1px solid var(--border-color);
     border-radius: 2px;
 }
 
@@ -49,7 +50,7 @@ option{
 }
 
 option:hover{
-    background-color: var(--text-color);
+    background-color: var(--active-color);
     color: var(--background-color);
 
 
@@ -68,7 +69,7 @@ option:active{
 
 button{
     background-color: transparent;
-    border: 1px solid var(--text-color);
+    border: 1px solid var(--border-color);
     border-radius: 2px;
     color: var(--text-color);
     padding: 0.5rem;
@@ -78,8 +79,8 @@ button{
 
 button:hover{
     transition: .2s;
-    background-color: var(--text-color);
-    color: var(--background-color)
+    background-color: var(--active-color);
+    color: var(--active-text-color)
 }
 
 form label{

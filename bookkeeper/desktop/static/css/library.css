@@ -15,14 +15,21 @@
 
 
 .book-menu{
-    border: 1px solid var(--text-color);
-    border-radius: 5px 5px 0 5px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--outer-border-radius);
+    border-bottom-right-radius: 0;
     
     min-width: 50vw;
+
+    box-shadow: 
+        var(--box-shadow-size)
+        var(--box-shadow-size)
+        0 
+        var(--border-color);
 }
 
 .header{
-    border-bottom: 1px solid var(--text-color);
+    border-bottom: 1px solid var(--border-color);
     padding: .5rem;
     display: grid;
     grid-template-columns: 1fr  1fr;
@@ -42,13 +49,6 @@
 
 .row p{
     text-align: left;
-}
-
-
-.row:hover{
-    background-color: var(--text-color);
-    color: var(--background-color);
-    transition: .2s;
 }
 
 p{

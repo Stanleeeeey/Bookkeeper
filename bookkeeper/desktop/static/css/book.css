@@ -10,8 +10,9 @@
 }
 
 .book{
-    border: 2px solid var(--text-color);
-    border-radius: 5px 5px 0px 5px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--outer-border-radius);
+    border-bottom-right-radius: 0;
     max-width:90vw;
     min-width: 50vw;
     padding: 1rem;

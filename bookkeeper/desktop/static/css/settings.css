@@ -11,8 +11,8 @@
 
 
 .settings{
-    border: 2px solid var(--text-color);
-    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--outer-border-radius);
     padding: 1rem;
     min-width: 50vh;
 }
@@ -27,8 +27,8 @@
 }
 
 .setting:hover{
-    background-color: var(--text-color);
-    color:var(--background-color)
+    background-color: var(--active-color);
+    color:var(--active-text-color)
 }
 
 

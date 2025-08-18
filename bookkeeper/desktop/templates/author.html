@@ -9,15 +9,17 @@
 <div class="contianer">
     <h1>{{author.name}} {{author.surname}}</h1>
     <div class="author">
-        {%for book in books%}
-            <a href = "/book/{{book.id|string}}?go_back={{url_for(request.endpoint, **request.view_args)}}" class="row">
-                <p>{{book.title}}</p>
-                <p>{{book.library.name}}</p>
-            </a>
+        <div class="list">
+            {%for book in books%}
+                <a href = "/book/{{book.id|string}}?go_back={{url_for(request.endpoint, **request.view_args)}}" class="row">
+                    <p>{{book.title}}</p>
+                    <p>{{book.library.name}}</p>
+                </a>
 
-        {%endfor%}
+            {%endfor%}
 
 
+        </div>
     </div>
     
     <div class="go-back">

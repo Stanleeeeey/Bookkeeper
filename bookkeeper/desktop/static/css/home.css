@@ -2,9 +2,13 @@
 
 
 .libraries-menu{
-    border: 1px solid var(--text-color);
-    border-radius: 5px;
-    
+    border: 1px solid var(--border-color);
+    border-radius: var(--outer-border-radius);
+    box-shadow: 
+        var(--box-shadow-size)
+        var(--box-shadow-size)
+        0 
+        var(--border-color);   
     min-width: 50vw;
 }
 
