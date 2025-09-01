@@ -1,5 +1,7 @@
 """every endpoint of the application"""
-from flask import Response, request, redirect
+import json
+
+from flask import Response, request, redirect, make_response
 
 from bookkeeper.database.database import Database
 from bookkeeper.database import Library, User, Author, Book
@@ -176,13 +178,14 @@ def edit_book_page(book_id:int, db:Database):
         )
 
     if request.method == "POST":
+
         db.edit_book(
             book_id,
             title = request.form.get("title"),
             author_id = request.form.get("author"),
             edition = request.form.get("edition"),
             status = 1, #to be added,
-            user_id= get_setting("user-id"),
+            user_id= request.form.get("user"),
             library_id = request.form.get("library_id"),
         )
         return redirect(f"/library/{request.form.get('library_id')}")
@@ -225,3 +228,35 @@ def edit_author_page(author_id:int, db:Database):
         )
         return redirect(f"/author/{author_id}")
     return Response(status=405)
+
+def delete_book(db):
+    """deletes book"""
+    db.delete_book(request.json.get("id"))
+
+    return Response(status=200)
+
+def delete_user(db):
+    """deletes user if not main user"""
+
+    user_id = int(request.json.get("id"))
+
+    if user_id == int(get_setting("user-id")):
+
+        return make_response(
+            json.dumps({
+                "message":"can't delete main user"
+            }),
+            404
+        )
+
+    if len(db.get_books_by_user_id(user_id).value) != 0:
+
+        return make_response(
+            json.dumps({
+                "message":"can't delete user with books"
+            }),
+            404
+        )
+
+    db.delete_user(int(user_id))
+    return Response(status=200)

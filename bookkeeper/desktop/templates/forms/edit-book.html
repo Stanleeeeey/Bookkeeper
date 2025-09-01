@@ -24,10 +24,10 @@
         <label for="edition" value = "{{book.edition}}">Edition (optional)</label>
         <input type="number" name= "edition">
 
-        <label for="author">Owner</label>
-        <select name= "author" required value = "{{book.user_id}}">
+        <label for="user">Owner</label>
+        <select name= "user" required value = "{{book.user_id}}">
             {% for user in users %}
-                <option value="{{user.id}}">{{user.name}} {{user.surname}}</option>
+                <option value="{{user.id}}" {%if book.user_id == user.id %} selected="selected" {%endif%}>{{user.name}} {{user.surname}}</option>
 
             {% endfor %}
             

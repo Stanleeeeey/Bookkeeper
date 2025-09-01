@@ -20,7 +20,9 @@ from bookkeeper.desktop.routes import (
     library_page,
     settings_page,
     user_page,
-    users_page
+    users_page,
+    delete_book,
+    delete_user
 )
 
 
@@ -156,6 +158,20 @@ class DesktopApp: # pylint: disable=too-few-public-methods
                 "/user/<user_id>",
                 "user",
                 user_page,
+                db = self.db
+            ),
+            Route(
+                "/delete/book",
+                "delete book",
+                delete_book,
+                methods = ["POST"],
+                db = self.db
+            ),
+            Route(
+                "/delete/user",
+                "delete user",
+                delete_user,
+                methods = ["POST"],
                 db = self.db
             )
         ]

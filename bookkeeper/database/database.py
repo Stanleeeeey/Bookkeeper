@@ -62,7 +62,7 @@ class DBResponse:
             return self.value.__iter__()
         raise ValueError("this response is not iterable")
 
-class Database():
+class Database(): # pylint: disable=too-many-public-methods
     """A class for interacting with the database"""
 
     def __init__(self):
@@ -108,6 +108,16 @@ class Database():
         session.add(user)
         session.commit()
         return DBResponse(DBMessage.CREATED, user.id)
+
+    def delete_user(self, user_id : int) -> DBResponse:
+        """deletes user with given id"""
+        session = Session(bind = self.engine)
+        user = session.query(UserSchema).where(UserSchema.id == user_id).first()
+        if user:
+            session.delete(user)
+            session.commit()
+            return DBResponse(DBMessage.DELETED, id)
+        return DBResponse(DBMessage.USER_NOT_FOUND)
 
     def add_library(self, library: Library) -> DBResponse:
         """adds library to the database"""
@@ -261,6 +271,8 @@ class Database():
                 book.edition = options["edition"]
             if "status" in options:
                 book.status = options["status"]
+            if "user_id" in options:
+                book.user_id = options["user_id"]
 
             session.commit()
 
