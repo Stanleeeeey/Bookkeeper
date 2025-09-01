@@ -3,7 +3,7 @@
 A desktop app to account for all of your books in your home library.
 
 <p align = center>
-<img src = "https://github.com/Stanleeeeey/Bookkeeper/blob/main/bookkeeper/desktop/static/assets/banner-light.png"  width = 30%>
+<img src = "https://github.com/Stanleeeeey/Bookkeeper/blob/main/bookkeeper/desktop/static/assets/banner-fantasy-light.png"  width = 30%>
 
 </p>
 
